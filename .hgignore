@@ -1,0 +1,37 @@
+#use glob syntax.
+syntax: glob
+notebooks/superceded
+notebooks/carbon_dev/BASE_RUN/OLD/*
+notebooks/carbon_dev/BASE_RUN/CLEAN/FLUX_plot/*
+notebooks/carbon_dev/EXPERIMENTS/APRIL_EXP/APRIL_PROFILES/*.png
+notebooks/carbon_dev/CCCmaDEV/CCCma/*
+notebooks/carbon_dev/CCCmaDEV/cc_abrupt/*
+notebooks/carbon_dev/VIZ/*
+notebooks/carbon_dev/CCCmaDEV/april_pngs/*.png
+notebooks/carbon_dev/CCCmaDEV/tester/*
+notebooks/carbon_dev/CCCmaDEV/old_mysterious_pngs/*
+notebooks/carbon_dev/EXPERIMENTS/renewal_experiment/*.png
+notebooks/carbon_dev/EXPERIMENTS/renewal_experiment/sn_SR_ONC/*.png
+notebooks/carbon_dev/EXPERIMENTS/renewal_experiment/sn_SR/*.png
+notebooks/carbon_dev/EXPERIMENTS/renewal_experiment/OLD_PICTURES/*
+notebooks/carbon_dev/EXPERIMENTS/renewal_experiment/DIC_ONC/*.png
+notebooks/carbon_dev/EXPERIMENTS/renewal_experiment/DIC/*.png
+notebooks/carbon_dev/EXPERIMENTS/APRIL_EXP/PRES_PLOT/*.png
+notebooks/carbon_dev/EXPERIMENTS/APRIL_EXP/PP9/*.png
+notebooks/carbon_dev/EXPERIMENTS/APRIL_EXP/PP2/*.png
+notebooks/carbon_dev/EXPERIMENTS/APRIL_EXP/OLD/*
+notebooks/carbon_dev/EXPERIMENTS/APRIL_EXP/FULL_120_pngs/*
+notebooks/carbon_dev/EXPERIMENTS/APRIL_EXP/APR_DP_dat/*.png
+notebooks/carbon_dev/CCCmaDEV/hind_2018012/*.png
+notebooks/carbon_dev/*/OLD
+*.key
+*.nc
+*.mat
+*.jpg
+*.pdf
+*.avi
+*.png
+*.mov
+*.mp4
+*.txt
+*.csv
