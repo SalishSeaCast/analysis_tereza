@@ -1,5 +1,6 @@
 #use glob syntax.
 syntax: glob
+*SCRATCH*
 notebooks/superceded
 notebooks/carbon_dev/BASE_RUN/OLD/*
 notebooks/carbon_dev/BASE_RUN/CLEAN/FLUX_plot/*
