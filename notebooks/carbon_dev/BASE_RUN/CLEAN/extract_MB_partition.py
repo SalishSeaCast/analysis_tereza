@@ -40,17 +40,17 @@ import gsw
 
 #year BR
 start = '2015-01-01'
-end = '2015-11-25'
+end = '2015-12-29'
 start3 = '2015-01-01'
-end3 = '2015-11-25'
+end3 = '2015-12-29'
 
 st = dt.datetime(2015,1,1)
-en = dt.datetime(2015,11,25)
+en = dt.datetime(2015,12,29)
 st3 = dt.datetime(2015,1,1)
-en3 = dt.datetime(2015,11,25)
+en3 = dt.datetime(2015,12,29)
 
-ncname_BR = 'BR2015_2ndyr_massbal_to1125.nc'
-ncname_PI = 'PI2015_2ndyr_massbal_to1125.nc'
+ncname_BR = 'BR2015_2ndyr_MB_partition_to1229.nc'
+ncname_PI = 'PI2015_2ndyr_MB_partition_to1229.nc'
 
 y_st = st.timetuple().tm_yday
 print(y_st)
@@ -65,6 +65,7 @@ y_en3 = en3.timetuple().tm_yday
 print(y_en3)
 ts_PI = np.arange(y_st3,y_en3+1,1)
 days_in = np.size(ts_PI)
+
 
 sdir = '/data/tjarniko/results/BR_2nd_2015_cop/SKOG_2/ncs/'
 sdir3 = '/data/tjarniko/results/PREIND_2nd_2015/PI_2/ncs/'
@@ -118,10 +119,14 @@ grid = nc.Dataset('/data/tjarniko/MEOPAR/grid/mesh_mask201702.nc')
 vdir = grid['e2t'][0,0:878,20:398]
 udir = grid['e1t'][0,0:878,20:398]
 wdir = grid['e3t_0'][0,:,0:878,20:398]
-wdir_20 = grid['e3t_0'][0,1:20,0:878,20:398]
+wdir_20 = grid['e3t_0'][0,0:20,0:878,20:398]
+wdir_20_100 = grid['e3t_0'][0,20:27,0:878,20:398]
+wdir_deep = grid['e3t_0'][0,27:40,0:878,20:398]
 surfa = vdir*udir
 size_domain = wdir *surfa
 size_domain_20 = wdir_20 *surfa
+size_domain_20_100 = wdir_20_100 *surfa
+size_domain_deep = wdir_deep *surfa
 
 def calculate_total_C(files, size_domain):
     stor_mol = np.zeros(len(files))
@@ -131,6 +136,7 @@ def calculate_total_C(files, size_domain):
         if i%50 == 0:
             print(i)
         G = nc.Dataset(f)
+        print(f)
         var_tmp = G.variables['dissolved_inorganic_carbon'][0,:,0:878,20:398]
         var_tmp[var_tmp == 1e+20] = 0
         var_tmp2 = var_tmp * size_domain
@@ -165,9 +171,43 @@ def calculate_surface20_C(files, surfa):
         if i%50 == 0:
             print(i)
         G = nc.Dataset(f)
-        var_tmp = G.variables['dissolved_inorganic_carbon'][0,1:20,0:878,20:398]
+        var_tmp = G.variables['dissolved_inorganic_carbon'][0,0:20,0:878,20:398]
         var_tmp[var_tmp == 1e+20] = 0
         var_tmp2 = var_tmp * size_domain_20
+        totdic = np.sum(np.sum(var_tmp2))
+        totdic_mols = totdic * (1/1000)        
+        stor_mol[i] = totdic_mols
+        i = i+1
+    return stor_mol
+
+def calculate_20_100_C(files, surfa):
+    stor_mol = np.zeros(len(files))
+
+    i = 0
+    for f in files:
+        if i%50 == 0:
+            print(i)
+        G = nc.Dataset(f)
+        var_tmp = G.variables['dissolved_inorganic_carbon'][0,20:27,0:878,20:398]
+        var_tmp[var_tmp == 1e+20] = 0
+        var_tmp2 = var_tmp * size_domain_20_100
+        totdic = np.sum(np.sum(var_tmp2))
+        totdic_mols = totdic * (1/1000)        
+        stor_mol[i] = totdic_mols
+        i = i+1
+    return stor_mol
+
+def calculate_100_deep_C(files, surfa):
+    stor_mol = np.zeros(len(files))
+
+    i = 0
+    for f in files:
+        if i%50 == 0:
+            print(i)
+        G = nc.Dataset(f)
+        var_tmp = G.variables['dissolved_inorganic_carbon'][0,27:40,0:878,20:398]
+        var_tmp[var_tmp == 1e+20] = 0
+        var_tmp2 = var_tmp * size_domain_deep
         totdic = np.sum(np.sum(var_tmp2))
         totdic_mols = totdic * (1/1000)        
         stor_mol[i] = totdic_mols
@@ -214,6 +254,8 @@ print('BR')
 stor_mol_BR = calculate_total_C(BR_ar, size_domain)
 stor_mol_surf_BR = calculate_surface_C(BR_ar, surfa)
 stor_mol_20_BR = calculate_surface20_C(BR_ar, size_domain_20)
+stor_mol_20_100_BR = calculate_20_100_C(BR_ar, size_domain_20_100)
+stor_mol_deep_BR = calculate_100_deep_C(BR_ar, size_domain_deep)
 stor_flx_BR = calculate_flux(BR_ar, surfa)
 stor_trans_BR = calculate_transports(BR_ar_tp)
 
@@ -229,6 +271,10 @@ ts2 = g.createVariable('stor_mol_surf_BR','f4',('days'))
 ts2[:] = stor_mol_surf_BR
 ts3 = g.createVariable('stor_mol_20_BR','f4',('days'))
 ts3[:] = stor_mol_20_BR
+ts3b = g.createVariable('stor_mol_20_100_BR','f4',('days'))
+ts3b[:] = stor_mol_20_100_BR
+ts3c = g.createVariable('stor_mol_deep_BR','f4',('days'))
+ts3c[:] = stor_mol_deep_BR
 ts4 = g.createVariable('stor_flx_BR','f4',('days'))
 ts4[:] = stor_flx_BR
 ts5 = g.createVariable('stor_trans_BR','f4',('days'))
@@ -239,8 +285,11 @@ print('PI')
 stor_mol_PI = calculate_total_C(PI_ar, size_domain)
 stor_mol_surf_PI = calculate_surface_C(PI_ar, surfa)
 stor_mol_20_PI = calculate_surface20_C(PI_ar, size_domain_20)
+stor_mol_20_100_PI = calculate_20_100_C(PI_ar, size_domain_20_100)
+stor_mol_deep_PI = calculate_100_deep_C(PI_ar, size_domain_deep)
 stor_flx_PI = calculate_flux(PI_ar, surfa)
 stor_trans_PI = calculate_transports(PI_ar_tp)
+
 
 
 f = nc.Dataset(ncname_PI,'w', format='NETCDF4') #'w' stands for write
@@ -253,6 +302,10 @@ ts2 = g.createVariable('stor_mol_surf_PI','f4',('days'))
 ts2[:] = stor_mol_surf_PI
 ts3 = g.createVariable('stor_mol_20_PI','f4',('days'))
 ts3[:] = stor_mol_20_PI
+ts3b = g.createVariable('stor_mol_20_100_PI','f4',('days'))
+ts3b[:] = stor_mol_20_100_PI
+ts3c = g.createVariable('stor_mol_deep_PI','f4',('days'))
+ts3c[:] = stor_mol_deep_PI
 ts4 = g.createVariable('stor_flx_PI','f4',('days'))
 ts4[:] = stor_flx_PI
 ts5 = g.createVariable('stor_trans_PI','f4',('days'))
