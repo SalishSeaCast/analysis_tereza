@@ -25,13 +25,20 @@ print(start)
 
 bigpath = '/data/tjarniko/results/BR_2nd_2015_cop/SKOG_2/ncs/'
 
-ncnames = ['sal_BR2015_modeloutput_for_GRL_comparison.nc','temp_BR2015_modeloutput_for_GRL_comparison.nc',\
-           'DIC_BR2015_modeloutput_for_GRL_comparison.nc','TA_BR2015_modeloutput_for_GRL_comparison.nc']
+# ncnames = ['sal_BR2015_modeloutput_for_GRL_comparison.nc','temp_BR2015_modeloutput_for_GRL_comparison.nc',\
+#            'DIC_BR2015_modeloutput_for_GRL_comparison.nc','TA_BR2015_modeloutput_for_GRL_comparison.nc']
            
-datnames = ['grid','grid','carp','carp']
-fnames = ['vosaline','votemper','dissolved_inorganic_carbon','total_alkalinity']
-firstmos = [1,1,1,1]
-yrs = ['15','15','15','15']
+# datnames = ['grid','grid','carp','carp']
+# fnames = ['vosaline','votemper','dissolved_inorganic_carbon','total_alkalinity']
+# firstmos = [1,1,1,1]
+# yrs = ['15','15','15','15']
+
+ncnames = ['NO3_BR2015_modeloutput_for_GRL_comparison.nc']
+           
+datnames = ['ptrc']
+fnames = ['nitrate']
+firstmos = [1]
+yrs = ['15']
 
 ##
 
