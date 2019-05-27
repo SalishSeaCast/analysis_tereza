@@ -40,20 +40,20 @@ import gsw
 
 #year BR
 start = '2015-01-01'
-end = '2015-12-31'
+end = '2015-12-29'
 start3 = '2015-01-01'
-end3 = '2015-12-31'
+end3 = '2015-12-29'
 
 st = dt.datetime(2015,1,1)
-en = dt.datetime(2015,12,31)
+en = dt.datetime(2015,12,29)
 st3 = dt.datetime(2015,1,1)
-en3 = dt.datetime(2015,12,31)
+en3 = dt.datetime(2015,12,29)
 
-ncname_BR = 'MASSBAL_BR2015_to1231_spinup.nc'
-ncname_PI = 'MASSBAL_PI2015_to1231_spinup.nc'
+ncname_BR = 'MASSBAL_BR2015_to1229_spunup.nc'
+ncname_PI = 'MASSBAL_PI2015_to1229_spunup.nc'
 
-sdir = '/data/tjarniko/results/BR_1st_2015/ncs/'
-sdir3 = '/data/tjarniko/results/PREIND_1st_2015/ncs/'
+sdir = '/data/tjarniko/results/BR_2nd_2015_cop/SKOG_2/ncs/'
+sdir3 = '/data/tjarniko/results/PREIND_2nd_2015/PI_2/ncs/'
 
 y_st = st.timetuple().tm_yday
 print(y_st)
@@ -111,11 +111,33 @@ def make_nclen_transport(start,end,sdir):
 
     return sens_ar
 
+def make_nclen_transport_V(start,end,sdir):
+    base_ar = []
+    sens_ar = []
+    start_run = arrow.get(start)
+    end_run = arrow.get(end)
+    arrow_array = []
+    for r in arrow.Arrow.span_range('day', start_run, end_run):
+        arrow_array.append(r)
+
+    dayslen = len(arrow_array)
+    for i in range(0,dayslen):
+        tdate = arrow_array[i][0]
+        ddmmmyy = tdate.format('DDMMMYY').lower()
+        ymd = tdate.format('YYYYMMDD')
+        nc_sens = sdir + '/SKOG_1d_*' +'dian_V_' + ymd + '-' + ymd + '.nc'
+        tnc_sens = glob.glob(nc_sens)
+        sens_ar.append(tnc_sens[0])
+
+    return sens_ar
 
 BR_ar = make_nclen(start,end,'carp', sdir)
 PI_ar = make_nclen(start3,end3,'carp', sdir3)
 BR_ar_tp = make_nclen_transport(start,end, sdir)
 PI_ar_tp = make_nclen_transport(start3,end3,sdir3)
+
+BR_ar_tpV = make_nclen_transport_V(start,end, sdir)
+PI_ar_tpV = make_nclen_transport_V(start3,end3,sdir3)
 
 grid = nc.Dataset('/data/tjarniko/MEOPAR/grid/mesh_mask201702.nc')
 vdir = grid['e2t'][0,0:878,20:398]
@@ -252,6 +274,23 @@ def calculate_transports(files):
 
     return stor_trans
 
+def calculate_transports_JS(files):
+    stor_trans = np.zeros(len(files))
+
+    i = 0
+    for f in files:
+        if i%50 == 0:
+            print(i)
+        G = nc.Dataset(f)
+        var_tmp = G.variables['DIC_VT'][:,:,878,0:120]
+        var_tmp[var_tmp == 1e+20] = 0
+        #mmol/s > mol/day
+        var_tmp2 = np.sum(var_tmp)*(1/1000)*60*60*24
+        stor_trans[i] = var_tmp2
+        i = i+1
+
+    return stor_trans_JS
+
 print('BR')
 stor_mol_BR = calculate_total_C(BR_ar, size_domain)
 stor_mol_surf_BR = calculate_surface_C(BR_ar, surfa)
@@ -260,7 +299,7 @@ stor_mol_20_100_BR = calculate_20_100_C(BR_ar, size_domain_20_100)
 stor_mol_deep_BR = calculate_100_deep_C(BR_ar, size_domain_deep)
 stor_flx_BR = calculate_flux(BR_ar, surfa)
 stor_trans_BR = calculate_transports(BR_ar_tp)
-
+stor_trans_BR_JS = calculate_transports_JS(BR_ar_tp_V)
 
 
 f = nc.Dataset(ncname_BR,'w', format='NETCDF4') #'w' stands for write
@@ -281,6 +320,8 @@ ts4 = g.createVariable('stor_flx_BR','f4',('days'))
 ts4[:] = stor_flx_BR
 ts5 = g.createVariable('stor_trans_BR','f4',('days'))
 ts5[:] = stor_trans_BR
+ts6 = g.createVariable('stor_trans_BR_JS','f4',('days'))
+ts6[:] = stor_trans_BR_JS
 f.close()
 
 print('PI')
@@ -291,6 +332,7 @@ stor_mol_20_100_PI = calculate_20_100_C(PI_ar, size_domain_20_100)
 stor_mol_deep_PI = calculate_100_deep_C(PI_ar, size_domain_deep)
 stor_flx_PI = calculate_flux(PI_ar, surfa)
 stor_trans_PI = calculate_transports(PI_ar_tp)
+stor_trans_PI_JS = calculate_transports_JS(PI_ar_tp_V)
 
 
 
@@ -312,6 +354,8 @@ ts4 = g.createVariable('stor_flx_PI','f4',('days'))
 ts4[:] = stor_flx_PI
 ts5 = g.createVariable('stor_trans_PI','f4',('days'))
 ts5[:] = stor_trans_PI
+ts6 = g.createVariable('stor_trans_PI_JS','f4',('days'))
+ts6[:] = stor_trans_PI_JS
 f.close()
 
 
