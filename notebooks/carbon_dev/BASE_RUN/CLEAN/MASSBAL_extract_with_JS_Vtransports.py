@@ -40,17 +40,17 @@ import gsw
 
 #year BR
 start = '2015-01-01'
-end = '2015-12-29'
+end = '2015-12-31'
 start3 = '2015-01-01'
-end3 = '2015-12-29'
+end3 = '2015-12-31'
 
 st = dt.datetime(2015,1,1)
-en = dt.datetime(2015,12,29)
+en = dt.datetime(2015,12,31)
 st3 = dt.datetime(2015,1,1)
-en3 = dt.datetime(2015,12,29)
+en3 = dt.datetime(2015,12,31)
 
-ncname_BR = 'MASSBAL_BR2015_to1229_spunup.nc'
-ncname_PI = 'MASSBAL_PI2015_to1229_spunup.nc'
+ncname_BR = 'MASSBAL_BR2015_to1231_spunup.nc'
+ncname_PI = 'MASSBAL_PI2015_to1231_spunup.nc'
 
 sdir = '/data/tjarniko/results/BR_2nd_2015_cop/SKOG_2/ncs/'
 sdir3 = '/data/tjarniko/results/PREIND_2nd_2015/PI_2/ncs/'
@@ -275,7 +275,7 @@ def calculate_transports(files):
     return stor_trans
 
 def calculate_transports_JS(files):
-    stor_trans = np.zeros(len(files))
+    stor_trans_JS = np.zeros(len(files))
 
     i = 0
     for f in files:
@@ -286,7 +286,7 @@ def calculate_transports_JS(files):
         var_tmp[var_tmp == 1e+20] = 0
         #mmol/s > mol/day
         var_tmp2 = np.sum(var_tmp)*(1/1000)*60*60*24
-        stor_trans[i] = var_tmp2
+        stor_trans_JS[i] = var_tmp2
         i = i+1
 
     return stor_trans_JS
@@ -299,7 +299,7 @@ stor_mol_20_100_BR = calculate_20_100_C(BR_ar, size_domain_20_100)
 stor_mol_deep_BR = calculate_100_deep_C(BR_ar, size_domain_deep)
 stor_flx_BR = calculate_flux(BR_ar, surfa)
 stor_trans_BR = calculate_transports(BR_ar_tp)
-stor_trans_BR_JS = calculate_transports_JS(BR_ar_tp_V)
+stor_trans_BR_JS = calculate_transports_JS(BR_ar_tpV)
 
 
 f = nc.Dataset(ncname_BR,'w', format='NETCDF4') #'w' stands for write
@@ -332,7 +332,7 @@ stor_mol_20_100_PI = calculate_20_100_C(PI_ar, size_domain_20_100)
 stor_mol_deep_PI = calculate_100_deep_C(PI_ar, size_domain_deep)
 stor_flx_PI = calculate_flux(PI_ar, surfa)
 stor_trans_PI = calculate_transports(PI_ar_tp)
-stor_trans_PI_JS = calculate_transports_JS(PI_ar_tp_V)
+stor_trans_PI_JS = calculate_transports_JS(PI_ar_tpV)
 
 
 
