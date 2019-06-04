@@ -40,17 +40,17 @@ import gsw
 
 #year BR
 start = '2015-01-01'
-end = '2015-12-30'
+end = '2015-12-31'
 start3 = '2016-01-01'
-end3 = '2016-12-30'
+end3 = '2016-12-31'
 
 st = dt.datetime(2015,1,1)
-en = dt.datetime(2015,12,30)
+en = dt.datetime(2015,12,31)
 st3 = dt.datetime(2016,1,1)
-en3 = dt.datetime(2016,12,30)
+en3 = dt.datetime(2016,12,31)
 
-ncname_BR = 'MASSBAL_BR2015_to1230_spunup.nc'
-ncname_BR2 = 'MASSBAL_BR2016_to1230_spunup.nc'
+ncname_BR = 'MASSBAL_BR2015_to1231_spunup.nc'
+ncname_BR2 = 'MASSBAL_BR2016_to1231_spunup.nc'
 
 sdir = '/data/tjarniko/results/BR_2nd_2015_cop/SKOG_2/ncs/'
 sdir2 = '/data/tjarniko/results/BR_2016/ncs/'
