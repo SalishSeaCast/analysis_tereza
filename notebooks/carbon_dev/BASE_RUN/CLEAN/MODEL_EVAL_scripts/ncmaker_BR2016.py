@@ -23,7 +23,7 @@ print(start)
 
 ## changeable input vars
 
-bigpath = '/data/tjarniko/results/BASERUN_EXP/BR_2nd_2015/ncs/'
+bigpath = '/data/tjarniko/results/BASERUN_EXP/BR_2016/ncs/'
 
 ncnames = ['sal_BR2015_modeloutput_for_GRL_comparison.nc','temp_BR2015_modeloutput_for_GRL_comparison.nc',\
             'DIC_BR2015_modeloutput_for_GRL_comparison.nc','TA_BR2015_modeloutput_for_GRL_comparison.nc',\
@@ -32,8 +32,14 @@ ncnames = ['sal_BR2015_modeloutput_for_GRL_comparison.nc','temp_BR2015_modeloutp
 datnames = ['grid','grid','carp','carp','ptrc']
 fnames = ['vosaline','votemper','dissolved_inorganic_carbon','total_alkalinity','nitrate']
 firstmos = [1,1,1,1,1]
-yrs = ['15','15','15','15','15']
+yrs = ['16','16','16','16','16']
 
+#ncnames = ['NO3_BR2015_modeloutput_for_GRL_comparison.nc']
+           
+#datnames = ['ptrc']
+#fnames = ['nitrate']
+#firstmos = [1]
+#yrs = ['15']
 
 ##
 
