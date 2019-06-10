@@ -1,3 +1,5 @@
+##calculates surface dic, no3, salinity for checking spinup
+
 from __future__ import print_function
 from numpy import *
 from scipy import *

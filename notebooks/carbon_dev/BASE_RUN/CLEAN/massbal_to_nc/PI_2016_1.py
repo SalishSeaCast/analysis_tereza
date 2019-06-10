@@ -28,11 +28,11 @@ import arrow
 import gsw
 import MASSBAL_ncmaker as mb
 
-ncname_BR = 'MASSBAL_PI_2015_3_fullyear.nc'
-sdir = 'PI_3rd_2015'
-start = '2015-01-01'
-end = '2015-12-31'
-st = dt.datetime(2015,1,1)
-en = dt.datetime(2015,12,31)
+ncname_BR = 'MASSBAL_PI_2016_1_fullyear.nc'
+sdir = 'PI_2016'
+start = '2016-01-01'
+end = '2016-12-31'
+st = dt.datetime(2016,1,1)
+en = dt.datetime(2016,12,31)
 calc_JS = 1
 mb.create_massbal_nc(ncname_BR, sdir, start, end, st, en, calc_JS)
