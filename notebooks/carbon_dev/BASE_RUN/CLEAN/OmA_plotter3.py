@@ -43,11 +43,11 @@ print(start_time)
 
 
 start1 = '2015-01-01'
-end1 = '2015-12-31'
+end1 = '2015-06-30'
 sdir_preind = '/data/tjarniko/results/BASERUN_EXP/PI_3rd_2015/ncs/'
 sdir_br = '/data/tjarniko/results/BASERUN_EXP/BR_2nd_2015/ncs/'
-figstr = 'Full_2015_OmA.png'
-ncname = 'OmA_2015_BRPI.nc'
+figstr = 'Jan1_Jun30_OmA.png'
+ncname = 'Jan1_Jun30_OmA.nc'
 
 
 def make_nclen(start,end,ftype, sdir):
