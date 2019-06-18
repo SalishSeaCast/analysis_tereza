@@ -51,7 +51,9 @@ def make_nclen(start,end,ftype, sdir):
         ymd = tdate.format('YYYYMMDD')
         nc_sens = '/data/tjarniko/results/BASERUN_EXP/' + sdir + '/ncs/SKOG_1d_*'+ ftype +'*' + ymd + '-' + ymd + '.nc'
         tnc_sens = glob.glob(nc_sens)
+        print(tnc_sens[0])
         sens_ar.append(tnc_sens[0])
+        
     return sens_ar
 
 def make_nclen_transport(start,end,sdir):
