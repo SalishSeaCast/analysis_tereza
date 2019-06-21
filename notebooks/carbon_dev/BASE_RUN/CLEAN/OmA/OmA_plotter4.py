@@ -1,5 +1,4 @@
-import matplotlib
-matplotlib.use('Agg')
+from __future__ import print_function
 from numpy import *
 from scipy import *
 import netCDF4 as nc
@@ -17,7 +16,9 @@ from salishsea_tools import (
 )
 from salishsea_tools import visualisations as vis
 import matplotlib.pyplot as plt
-#import matplotlib.patches as patches
+#matplotlib.use('Agg')
+import matplotlib.patches as patches
+plt.style.use('seaborn-whitegrid')
 import netCDF4 as nc
 
 import cmocean as cm
@@ -36,14 +37,17 @@ import arrow
 import gsw
 import datetime as dt
 
+import timeit
+start_time = timeit.default_timer()
+print(start_time)
 
-start1 = '2015-05-15'
-end1 = '2015-08-31'
 
+start1 = '2015-07-01'
+end1 = '2015-12-30'
 sdir_preind = '/data/tjarniko/results/BASERUN_EXP/PI_3rd_2015/ncs/'
 sdir_br = '/data/tjarniko/results/BASERUN_EXP/BR_2nd_2015/ncs/'
-ncname = 'Summer_OmA.nc'
-png_name = 'Summer2015_Oma.png'
+figstr = 'Jul1_end_OmA.png'
+ncname = 'Jul1_end_OmA.nc'
 
 
 def make_nclen(start,end,ftype, sdir):
@@ -83,6 +87,7 @@ def oned_moxy(tsal, ttemp, tdic, tta, pres_atm, depth_this):
     tdra = np.ravel(tdic) * 1e-3
     tzero = np.zeros_like(tsra)
     tpressure = np.zeros_like(tsra)
+    #tdepth = np.zeros_like(tsra)
     tpressure[:] = pres_atm
     tdepth = np.ravel(depth_this)
     tzero = tpressure * 0 
@@ -104,9 +109,6 @@ def oned_moxy(tsal, ttemp, tdic, tta, pres_atm, depth_this):
     return pHr, OmAr, pco2r
 
 def make_avgthwg_plot_OmA(start,end,sdir_PI, sdir_BR, figstr):
-    
-    #extract months, days, years from initial date string
-    #(I can see Doug wouldn't like this) - hacky but multi-functional
 
     yr_s = int(start[0:4])
     mon_s = int(start[5:7])
@@ -126,23 +128,21 @@ def make_avgthwg_plot_OmA(start,end,sdir_PI, sdir_BR, figstr):
     ts_BR = np.arange(y_st,y_en+1,1)
     days_in = len(ts_BR)
 
-    #extract files for carbon and temp/sal model results
     dates_preind_carp, files_preind_carp, doy_preind = make_nclen(start,end,'carp', sdir_PI)
     dates_br_carp, files_br_carp, doy_br = make_nclen(start,end,'carp', sdir_BR)
     dates_preind_grid, files_preind_grid, doy_preind = make_nclen(start,end,'grid_T', sdir_PI)
     dates_br_grid, files_br_grid, doy_br = make_nclen(start,end,'grid_T', sdir_BR)
     
-    #create array of appropriate depths
     dfile = nc.Dataset('/data/tjarniko/results/BASERUN_EXP/PI_3rd_2015/ncs/SKOG_1d_20150101_20150301_carp_T_20150101-20150101.nc')
     depths = dfile['deptht'][:]
     depth_broad = np.zeros([1,40,898,398])
     depth_broad2 = np.zeros([1,898,398])
 
+    #expand_dims
     for i in range(0,40):
         depth_broad2[:] = depths[i]
         depth_broad[:,i,:,:] = depth_broad2
 
-    #initialize empty arrays for relevant variables
     mon3_dic_BR = np.zeros([days_in,40,898,398])
     mon3_dic_PI = np.zeros([days_in,40,898,398])
     mon3_ta_BR = np.zeros([days_in,40,898,398])
@@ -154,10 +154,7 @@ def make_avgthwg_plot_OmA(start,end,sdir_PI, sdir_BR, figstr):
     mon3_OmA_BR = np.zeros([days_in,40,898,398])
     mon3_OmA_PI = np.zeros([days_in,40,898,398]) 
     
-    #sequentially cycle through netcdfs, open them, calculate mocsy parameters
-
     for i in range (0,days_in):
-        
         if i%5 ==0:
             print(i)
         test_br_carp = nc.Dataset(files_br_carp[i])
@@ -173,7 +170,6 @@ def make_avgthwg_plot_OmA(start,end,sdir_PI, sdir_BR, figstr):
         t_temp_br = np.squeeze(test_br_grid['votemper'][:])
         t_temp_pi = np.squeeze(test_pi_grid['votemper'][:])  
         
-        #this assignment is no longer necessary - I would 
         mon3_dic_BR[i,:,:,:] = t_dic_br
         mon3_dic_PI[i,:,:,:] = t_dic_pi
         mon3_ta_BR[i,:,:,:] = t_ta_br
@@ -182,12 +178,10 @@ def make_avgthwg_plot_OmA(start,end,sdir_PI, sdir_BR, figstr):
         mon3_sal_PI[i,:,:,:] = t_sal_pi
         mon3_temp_BR[i,:,:,:] = t_temp_br
         mon3_temp_PI[i,:,:,:] = t_temp_pi
-        
-        #calculate mocsy for each day for each field
+
         pHr_pi, OmAr_pi, pco2r_pi = oned_moxy(t_sal_pi, t_temp_pi, t_dic_pi, t_ta_pi, 1, depth_broad)
         pHr_br, OmAr_br, pco2r_br = oned_moxy(t_sal_br, t_temp_br, t_dic_br, t_ta_br, 1, depth_broad)
         
-        #
         mon3_OmA_BR[i,:,:,:] = OmAr_br
         mon3_OmA_PI[i,:,:,:] = OmAr_pi
         
@@ -196,34 +190,24 @@ def make_avgthwg_plot_OmA(start,end,sdir_PI, sdir_BR, figstr):
     OmAr_pi_av = np.mean(mon3_OmA_PI_m,axis = 0)
     OmAr_br_av = np.mean(mon3_OmA_BR_m,axis = 0)
     
-    bathy = nc.Dataset('/data/tjarniko/MEOPAR/grid/bathymetry_201702.nc')
-    mesh = nc.Dataset('/data/tjarniko/MEOPAR/grid/mesh_mask201702.nc')
 
-    t_cmap = cm.cm.balance
-    t_vmin = 0
-    t_vmax = 2
-    stepsize = 0.01
-    fig, (ax1, ax2, ax3) = plt.subplots(3,1,figsize=(10,10))
-    vis.contour_thalweg(ax1, OmAr_br_av, bathy, mesh, np.arange(t_vmin, t_vmax, stepsize), cmap = t_cmap)
-    ax1.set_title('BASE RUN 2015, averaged OmA: '+start+' - '+end , fontsize = 16)
-
-    t_cmap = cm.cm.balance
-    t_vmin = 0
-    t_vmax = 2
-    stepsize = 0.01
-    vis.contour_thalweg(ax2, OmAr_pi_av, bathy, mesh, np.arange(t_vmin, t_vmax, stepsize), cmap = t_cmap)
-    ax2.set_title('PREINDUSTRIAL RUN 2015, averaged OmA: '+start+' - '+end , fontsize = 16)
-
-    t_cmap = cm.cm.balance
-    t_vmin = -0.3
-    t_vmax = 0.3
-    stepsize = 0.005
-    vis.contour_thalweg(ax3, OmAr_br_av - OmAr_pi_av, bathy, mesh, np.arange(t_vmin, t_vmax, stepsize), cmap = t_cmap)
-    ax3.set_title('BASE - PREINDUSTRIAL RUN 2015, averaged OmA: '+start+' - '+end, fontsize = 16)
     
-    fig.tight_layout()
-    fig.savefig(figstr)
-    
-    return mon3_OmA_BR, mon3_OmA_PI, days_in
+    return mon3_OmA_BR_m, mon3_OmA_PI_m, days_in
 
-mon3_OmA_BR, mon3_OmA_PI, days_in = make_avgthwg_plot_OmA(start1,end1,sdir_preind, sdir_br, png_name)
+mon3_OmA_BR_m, mon3_OmA_PI_m, days_in = make_avgthwg_plot_OmA(start1,end1,sdir_preind, sdir_br, figstr)
+
+f = nc.Dataset(ncname,'w', format='NETCDF4') #'w' stands for write
+g = f.createGroup('model_output')
+#g.createDimension('days', len(NO3_mod))
+g.createDimension('days', days_in)
+g.createDimension('depths', 40)
+g.createDimension('ys', 898)
+g.createDimension('xs', 398)
+ts = g.createVariable('OmAr_pi','f4',('days','depths','ys','xs'))
+ts[:] = mon3_OmA_PI_m
+ts2 = g.createVariable('OmAr_br','f4',('days','depths','ys','xs'))
+ts2[:] = mon3_OmA_BR_m
+f.close()
+
+elapsed = timeit.default_timer() - start_time
+print(elapsed)

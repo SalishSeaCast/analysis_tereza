@@ -194,7 +194,7 @@ def make_avgthwg_plot_OmA(start,end,sdir_PI, sdir_BR, figstr):
     
     return mon3_OmA_BR_m, mon3_OmA_PI_m, days_in
 
-mon3_OmA_PI_m, mon3_OmA_BR_m, days_in = make_avgthwg_plot_OmA(start1,end1,sdir_preind, sdir_br, figstr)
+mon3_OmA_BR_m, mon3_OmA_PI_m, days_in = make_avgthwg_plot_OmA(start1,end1,sdir_preind, sdir_br, figstr)
 
 f = nc.Dataset(ncname,'w', format='NETCDF4') #'w' stands for write
 g = f.createGroup('model_output')

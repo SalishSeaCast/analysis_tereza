@@ -1,4 +1,5 @@
-from __future__ import print_function
+import matplotlib
+matplotlib.use('Agg')
 from numpy import *
 from scipy import *
 import netCDF4 as nc
@@ -220,7 +221,6 @@ def make_avgthwg_plot_OmA(start,end,sdir_PI, sdir_BR, figstr):
     ax3.set_title('BASE - PREINDUSTRIAL RUN 2015, averaged OmA: '+start+' - '+end, fontsize = 16)
     
     fig.tight_layout()
-    plt.show()
     fig.savefig(figstr)
     
     return mon3_OmA_BR, mon3_OmA_PI, days_in
