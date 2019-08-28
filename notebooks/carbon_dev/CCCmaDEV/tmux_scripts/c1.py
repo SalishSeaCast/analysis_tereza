@@ -20,5 +20,5 @@ import arrow
 
 start = '2016-01-01'
 end = '2016-12-31'
-CCCma.range_analyzer(start ,end, prof = False, ncb = False, surfmap = False, plume = False, pspace = True)
+CCCma.range_analyzer(start,end, prof = False, ncb = False, surfmap = False, plume = False, pspace = True)
 
