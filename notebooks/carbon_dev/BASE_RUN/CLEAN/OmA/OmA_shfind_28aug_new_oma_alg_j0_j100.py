@@ -48,34 +48,45 @@ def find_depth(dp,prof):
     first_proper_undersat = np.nan
     depth_undersat = np.nan    
     dummy_var = 0
-    t_ind = np.where(prof<1)
-    t_indss = np.where(prof>=1)
-    t_indar = t_ind[0]
-    t_indsssar = t_indss[0]
-    if t_indar.size == 0:
-        #print('saturated watercolumn!')
+    #tot masked
+    if prof.mask.all():
         dummy_var = 0
+        depth_undersat = np.nan
+        #print('masks all around!')
+    elif np.ma.min(prof) >1:
+        depth_undersat = np.nan
+        #print('saturated column')
+    elif np.ma.max(prof) <1:
+        depth_undersat = 0
+        #print('undersat to surface')        
     else:
-        if (t_indar.size != 0) & (t_indsssar.size == 0):
-            depth_undersat = 0
-            first_proper_undersat = 0
+        t_ind = np.where(prof<1)
+        t_indar = t_ind[0][0]
+        t_indss = np.where(prof>=1)
+        t_indsssar = t_indss[0][0]
+        if t_indar.size == 0:
             dummy_var = 0
-            #print('undersat to surface!')
-            max_supsat = np.nan
-        else:    
-            max_supsat = np.max(t_indsssar)    
-            try:
-                first_proper_undersat = np.min(t_indar[t_indar>max_supsat])
-            except:
+        else:
+            if (t_indar.size != 0) & (t_indsssar.size == 0):
+                depth_undersat = 0
+                first_proper_undersat = 0
                 dummy_var = 0
-                #print("An exception occurred")
-            if first_proper_undersat == 0:
-                depth_undersat = dp[0]
-            if np.isnan(first_proper_undersat):
-                dummy_var = 0
-                #print('saturated watercolumn!')
-            else:
-                depth_undersat = (dp[first_proper_undersat]+dp[first_proper_undersat-1])/2
+                #print('undersat to surface!')
+                max_supsat = np.nan
+            else:    
+                max_supsat = np.max(t_indsssar)    
+                try:
+                    first_proper_undersat = np.min(t_indar[t_indar>max_supsat])
+                except:
+                    dummy_var = 0
+                    #print("An exception occurred")
+                if first_proper_undersat == 0:
+                    depth_undersat = dp[0]
+                if np.isnan(first_proper_undersat):
+                    dummy_var = 0
+                    #print('saturated watercolumn!')
+                else:
+                    depth_undersat = (dp[first_proper_undersat]+dp[first_proper_undersat-1])/2
     return depth_undersat
 OmA = nc.Dataset('OmA_2015.nc')
 #switch BR and PI
@@ -105,7 +116,8 @@ for day in range(0,365):
             oma_dep_PI = find_depth(zlevels,OmA_PI_test)
             oma_d_PI[day,j,i] = oma_dep_PI
             oma_d_BR[day,j,i] = oma_dep_BR
-       
+            if (i == 250) & (j%10 == 0):
+                print('BR depth: '+str(oma_dep_BR), 'PI depth: '+str(oma_dep_PI))       
 
 elapsed = timeit.default_timer() - start_time
 print(elapsed)
