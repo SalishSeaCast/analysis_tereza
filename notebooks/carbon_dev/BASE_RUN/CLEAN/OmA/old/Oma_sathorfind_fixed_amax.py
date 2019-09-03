@@ -41,31 +41,34 @@ import timeit
 start_time = timeit.default_timer()
 print(start_time)
 
-OmA = nc.Dataset('OmA_2015.nc')
-#switch BR and PI
-BR_omA = OmA['model_output']['OmAr_pi']
-PI_omA = OmA['model_output']['OmAr_br']
+
+
+OmA = nc.Dataset('Oma_2015_fixed.nc')
+BR_omA = OmA['model_output']['OmAr_br']
+PI_omA = OmA['model_output']['OmAr_pi']
 
 t_nc = nc.Dataset('/results2/SalishSea/nowcast-green.201806/01jan18/SalishSea_1h_20180101_20180101_grid_T.nc')
-zlevels = (t_nc['deptht'])
+zlevels = (t_nc['deptht'][:])
 
 
-def find_nearest(array, value):
-    array = np.asarray(array)
-    idx = (np.abs(array - value)).argmin()
-    return array[idx], idx
-
-def find_oma_depths_filtered(Omega_A_ar,zlevels):
+def find_oma_depths_via_susan(Omega_A_ar, zlevels, tmask):
+    #subtract 1 to find values close to sat. horizon.
+#     oma_close_to_1 = np.abs(Omega_A_ar[:,:,:] - 1)
     oma_depths = np.zeros([898,398])
+    depth_inds = np.argmax(Omega_A_ar<1, axis=0)
+    oma_max = np.amax(Omega_A_ar<1, axis=0)
     for i in range(0,898):
-
         for j in range(0,398):
-    
-            t_slice = Omega_A_ar[:,i,j]
-            val, idx = find_nearest(t_slice,1)
-            oma_depths[i,j] = zlevels[idx]
 
-    return oma_depths  
+            oma_depths[i,j] = zlevels[depth_inds[i,j]]
+    oma_depths2 = np.ma.array(oma_depths, mask=(1-(tmask[0] * oma_max)))
+    
+    return oma_depths2
+
+
+tmask = nc.Dataset('/home/sallen/MEOPAR/grid/mesh_mask201702.nc')['tmask'][0]
+t_nc = nc.Dataset('/results2/SalishSea/nowcast-green.201806/01jan18/SalishSea_1h_20180101_20180101_grid_T.nc')
+zlevels = (t_nc['deptht'][:])
 
 oma_d_PI = np.zeros([365,898,398])
 oma_d_BR = np.zeros([365,898,398])
@@ -74,16 +77,16 @@ for day in range(0,365):
     OmA_BR_test = BR_omA[day,:,:,:]
     OmA_PI_test = PI_omA[day,:,:,:]
     
-    oma_dep_PI = find_oma_depths_filtered(OmA_PI_test,zlevels)
-    oma_dep_BR = find_oma_depths_filtered(OmA_BR_test,zlevels)
+    oma_dep_PI = find_oma_depths_via_susan(OmA_PI_test,zlevels,tmask)
+    oma_dep_BR = find_oma_depths_via_susan(OmA_BR_test,zlevels,tmask)
     oma_d_PI[day,:,:] = oma_dep_PI
     oma_d_BR[day,:,:] = oma_dep_BR
     
 
-f = nc.Dataset('OmA_horizon_2015_find_oma_depths_filtered.nc','w', format='NETCDF4') #'w' stands for write
+f = nc.Dataset('OmA_horizon_2015_fixed2.nc','w', format='NETCDF4') #'w' stands for write
 g = f.createGroup('model_output')
-#g.createDimension('days', len(NO3_mod))
-g.createDimension('days', days_in)
+#g.createDimension('days', len(3))
+g.createDimension('days', 365)
 g.createDimension('ys', 898)
 g.createDimension('xs', 398)
 ts = g.createVariable('OmArHORIZON_pi','f4',('days','ys','xs'))
