@@ -12,9 +12,9 @@ def find_sathor(j_st,j_en,tit,shallow):
         print('using deep alg')
     if shallow == True:
         print('using shallow alg')
-    OmA = nc.Dataset('OmA_2015.nc')
-    BR_omA = OmA['model_output']['OmAr_pi']
-    PI_omA = OmA['model_output']['OmAr_br']
+    OmA = nc.Dataset('Oma_2015_fixed.nc')
+    BR_omA = OmA['model_output']['OmAr_br']
+    PI_omA = OmA['model_output']['OmAr_pi']
 
     t_nc = nc.Dataset('/results2/SalishSea/nowcast-green.201806/01jan18/SalishSea_1h_20180101_20180101_grid_T.nc')
     bath =  nc.Dataset('/home/sallen/MEOPAR/grid/bathymetry_201702.nc')

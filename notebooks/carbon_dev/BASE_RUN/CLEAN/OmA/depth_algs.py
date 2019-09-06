@@ -16,7 +16,7 @@ def find_depth_deepalg(dp,prof,water_depth):
         dummy_var = 0
         depth_undersat = np.nan
         #print('masks all around!')
-    elif np.ma.min(prof) >1:
+    elif np.ma.min(prof) >=1:
         depth_undersat = water_depth
         #print('saturated column')
     elif np.ma.max(prof) <1:
@@ -45,7 +45,7 @@ def find_depth_deepalg(dp,prof,water_depth):
                     #print("An exception occurred")
                 if first_proper_undersat == 0:
                     depth_undersat = dp[0]
-                if np.isnan(first_proper_undersat):
+                elif np.isnan(first_proper_undersat):
                     dummy_var = 0
                     #print('saturated watercolumn!')
                 else:
@@ -62,7 +62,7 @@ def find_depth_shallowalg(dp,prof,water_depth):
         dummy_var = 0
         depth_undersat = np.nan
         #print('masks all around!')
-    elif np.ma.min(prof) >1:
+    elif np.ma.min(prof) >=1:
         depth_undersat = water_depth
         #print('saturated column')
     elif np.ma.max(prof) <1:
@@ -91,7 +91,7 @@ def find_depth_shallowalg(dp,prof,water_depth):
                     #print("An exception occurred")
                 if first_proper_undersat == 0:
                     depth_undersat = dp[0]
-                if np.isnan(first_proper_undersat):
+                elif np.isnan(first_proper_undersat):
                     dummy_var = 0
                     #print('saturated watercolumn!')
                 else:
