@@ -195,6 +195,7 @@ pycnal_last_at_surface = 2019 - (params0 *np.exp(-params1*(25.15-potdens))+param
 pycnal_original_co2 = np.zeros_like(pycnal_last_at_surface)
 np.shape(pycnal_original_co2)
 for i in range(0,12):
+    print(i)
     for j in range(0,40):
         for k in range(0,10):
             for l in range(0,30):
