@@ -18,7 +18,7 @@ def bio_de(spacing, stn_start, stn_end, year):
     print('testing reload')
     print(year)
 
-    dirname = './NC_hindcast/' + str(year) +'/BIO_TS/'
+    dirname = '/data/tjarniko/MEOPAR/analysis-tereza/notebooks/CLUSTER_201905/NC_HINDCAST/' + str(year) +'/BIO_TS/'
     
     bath = '/results/nowcast-sys/NEMO-forcing/grid/mesh_mask_SalishSea2.nc'
     grid = mf.import_bathy(bath)
