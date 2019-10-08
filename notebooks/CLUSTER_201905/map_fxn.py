@@ -1,6 +1,7 @@
 import xarray as xr
 import glob
 import numpy as np
+import arrow
 
 def import_bathy(filepath):
     filepath = '/data/tjarniko/MEOPAR/NEMO-forcing/grid/mesh_mask_SalishSea2.nc'
@@ -50,174 +51,107 @@ def filter_stn_in_domain(stn_x,stn_y,fmask):
             
     return d_stn_x, d_stn_y
 
-def create_tracelist(monlist,daylist,nday,year):
-    '''monlist = ['jan','feb','mar','apr','may','jun','jul','aug','sep',
-      'oct','nov','dec']
-      daylist = [31,28,31,30,31,30,31,31,30,31,30,31]'''
-    if (year == 2013):
-        ye = 13
-    if (year == 2014):
-        ye = 14
-    if (year == 2016):
-        ye = 16
-    if (year == 2015):
-        ye = 15
-    if (year == 2017):
-        ye = 17
-    if (year == 2018):
-        ye = 18
-    #should write an exception here)
-    doy = []
-    for i in range(0,12):
-        mon = monlist[i]
-        day = daylist[i]
-        for j in range(1,day+1):
-            dom = j
-            if (dom<10):
-                dom = str(0) + str(dom)
-            else:
-                dom = str(dom)
-            daypath = dom + monlist[i] + str(ye)
-            doy.append(daypath)
+def create_physlist(year):
+    import arrow
+    start = str(year) + '-01-01'
+    end = str(year) + '-12-31'
 
+    start_run = arrow.get(start)
+    end_run = arrow.get(end)
+
+    arrow_array = []
+    for r in arrow.Arrow.span_range('day', start_run, end_run):
+        arrow_array.append(r)
+
+    date_array = []
+
+    for i in range(0,len(arrow_array)):    
+        q = arrow_array[i][0]  
+        numdat = q.format('YYYYMMDD').lower() 
+        date_array.append(numdat)
+
+    respath = '/data/tjarniko/avg/'
     trace_list = []
-    
-        #make paths to dataset results for first 310 days of the year
-    for i in range(0,nday):
-        Day_OI = doy[i]
+    for i in range(0,len(date_array)):
         
-        #print('The day of interest is ' + Day_OI)
-        #
-        #respath = '/results/SalishSea/hindcast'
-        #print(year)
-        respath = 'walrus'
-        #print(i)
-        respath = '/results/SalishSea/spinup.201905/'
-        print(respath)
-#        if ((year == 2015) | ((year == 2016) & (i < 325))) :
-#            respath = '/results/SalishSea/hindcast.201812'
-#        if ((year == 2016) & (i > 324)) :
-#            respath = '/results2/SalishSea/hindcast.201812_annex'
-#        if ((year == 2017) | (year == 2018)) :    
-#            respath = '/results2/SalishSea/hindcast.201812_annex'
-        #print(respath)
-        daypath = respath + '/' + Day_OI 
-        #print('xx')
-        print(daypath)
-        tracers = 'SalishSea_1d*ptrc_T.nc'
-        ptt = daypath +'/' + tracers
+        Day_OI = date_array[i]
+        print(Day_OI)
+        tracers = 'SalishSea_1*' + Day_OI + '_grid_T.nc'
+        
+        ptt = respath + tracers
         trace = glob.glob(ptt)
-        #print(trace)
-        #print(i)
-        #print('***')
-        #print(trace)
-
         trace = (trace[0])
+        print(trace)
         trace_list.append(trace)
     
     return trace_list
 
-def create_physlist(monlist,daylist,nday,year):
-    
-    if (year == 2013):
-        ye = 13
-    if (year == 2014):
-        ye = 14
-    if (year == 2016):
-        ye = 16
-    if (year == 2015):
-        ye = 15
-    if (year == 2017):
-        ye = 17
-    if (year == 2018):
-        ye = 18
-    doy = []
-    respath = '/results/SalishSea/hindcast'
-    for i in range(0,12):
-        mon = monlist[i]
-        day = daylist[i]
-        for j in range(1,day+1):
-            dom = j
-            if (dom<10):
-                dom = str(0) + str(dom)
-            else:
-                dom = str(dom)
-            daypath = dom + monlist[i] + str(ye)
-            doy.append(daypath)
+def create_tracelist(year):
+    import arrow
+    start = str(year) + '-01-01'
+    end = str(year) + '-12-31'
 
+    start_run = arrow.get(start)
+    end_run = arrow.get(end)
+
+    arrow_array = []
+    for r in arrow.Arrow.span_range('day', start_run, end_run):
+        arrow_array.append(r)
+
+    date_array = []
+
+    for i in range(0,len(arrow_array)):    
+        q = arrow_array[i][0]  
+        numdat = q.format('YYYYMMDD').lower() 
+        date_array.append(numdat)
+
+    respath = '/data/tjarniko/avg/'
     trace_list = []
-    
-        #make paths to dataset results for first 310 days of the year
-    for i in range(0,nday):
-        Day_OI = doy[i]
-        #print('The day of interest is ' + Day_OI)
-        #respath = '/results/SalishSea/hindcast'
-        respath = 'walrus'
-        respath = '/results/SalishSea/spinup.201905/'
-        #print(i)
-#        if ((year == 2015) | ((year == 2016) & (i < 325))) :
-#           respath = '/results/SalishSea/hindcast.201812'
-#        if ((year == 2016) & (i > 324)) :
-#            respath = '/results2/SalishSea/hindcast.201812_annex'
-#        if ((year == 2017) | (year == 2018)) :    
-#            respath = '/results2/SalishSea/hindcast.201812_annex'
-        daypath = respath + '/' + Day_OI 
-        #print(daypath)
-        tracers = 'SalishSea_1d*grid_T.nc'
-        ptt = daypath +'/' + tracers
+    for i in range(0,len(date_array)):
+        
+        Day_OI = date_array[i]
+        print(Day_OI)
+        tracers = 'SalishSea_1*' + Day_OI + '_ptrc_T.nc'
+        
+        ptt = respath + tracers
         trace = glob.glob(ptt)
         trace = (trace[0])
-        #print(trace)
+        print(trace)
         trace_list.append(trace)
     
     return trace_list
 
-def create_physlist_W(monlist,daylist,nday,year):
-    doy = []
-    if (year == 2013):
-        ye = 13
-    if (year == 2014):
-        ye = 14
-    if (year == 2016):
-        ye = 16
-    if (year == 2015):
-        ye = 15
-    if (year == 2017):
-        ye = 17
-    if (year == 2018):
-        ye = 18
-    
-    print(ye)
-    doy = []
-    respath = '/results/SalishSea/hindcast'
-    for i in range(0,12):
-        mon = monlist[i]
-        day = daylist[i]
-        for j in range(1,day+1):
-            dom = j
-            if (dom<10):
-                dom = str(0) + str(dom)
-            else:
-                dom = str(dom)
-            daypath = dom + monlist[i] + str(ye)
-            doy.append(daypath)
+def create_physlist_W(year):
+    import arrow
+    start = str(year) + '-01-01'
+    end = str(year) + '-12-31'
 
+    start_run = arrow.get(start)
+    end_run = arrow.get(end)
+
+    arrow_array = []
+    for r in arrow.Arrow.span_range('day', start_run, end_run):
+        arrow_array.append(r)
+
+    date_array = []
+
+    for i in range(0,len(arrow_array)):    
+        q = arrow_array[i][0]  
+        numdat = q.format('YYYYMMDD').lower() 
+        date_array.append(numdat)
+
+    respath = '/data/tjarniko/avg/'
     trace_list = []
-    
-    for i in range(0,nday):
-        Day_OI = doy[i]
-        #print('The day of interest is ' + Day_OI)
-        #respath = '/results/SalishSea/hindcast'
-        respath = 'walrus'
-        #print(i)
-        respath = '/results/SalishSea/spinup.201905/'
-        daypath = respath + '/' + Day_OI 
-        #print(daypath)
-        tracers = 'SalishSea_1d*grid_W.nc'
-        ptt = daypath +'/' + tracers
+    for i in range(0,len(date_array)):
+        
+        Day_OI = date_array[i]
+        print(Day_OI)
+        tracers = 'SalishSea_1*' + Day_OI + '_grid_W.nc'
+        
+        ptt = respath + tracers
         trace = glob.glob(ptt)
         trace = (trace[0])
-        #print(trace)
+        print(trace)
         trace_list.append(trace)
     
     return trace_list
