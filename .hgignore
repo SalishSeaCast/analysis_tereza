@@ -37,3 +37,4 @@ notebooks/carbon_dev/BASE_RUN/CLEAN/OmA/old/*
 *.mp4
 *.txt
 *.csv
+*.zip
