@@ -1,7 +1,0 @@
-load tjarnikova-Jarnikova_Canadian_Arctic_DMS_supldata-2455bdc/osscar_mims_data.mat
-
-coresp_mims = zeros(1,344);
-
-for i = 1:344
-    osdate = osscar_DMS.mdate(i)
-end
