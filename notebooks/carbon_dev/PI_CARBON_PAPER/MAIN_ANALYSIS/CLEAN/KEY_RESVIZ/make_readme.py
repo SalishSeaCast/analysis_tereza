@@ -23,8 +23,8 @@ import re
 
 
 NBVIEWER = 'http://nbviewer.jupyter.org/urls'
-REPO = 'bitbucket.org/salishsea/analysis-terez/raw/tip'
-REPO_DIR = 'notebooks'
+REPO = 'bitbucket.org/salishsea/analysis-tereza/raw/tip'
+REPO_DIR = 'notebooks/carbon_dev/PI_CARBON_PAPER/MAIN_ANALYSIS/CLEAN/KEY_RESVIZ/'
 TITLE_PATTERN = re.compile('#{1,6} ?')
 
 
