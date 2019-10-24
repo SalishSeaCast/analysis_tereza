@@ -7,7 +7,7 @@ The links below are to static renderings of the notebooks via
 Descriptions under the links below are from the first cell of the notebooks
 (if that cell contains Markdown or raw text).
 
-* ##[MONTHLY_AVG_SURFACE_PROPERTIES.ipynb](http://nbviewer.jupyter.org/urls/bitbucket.org/salishsea/analysis-tereza/raw/tip/notebooks/carbon_dev/PI_CARBON_PAPER/MAIN_ANALYSIS/CLEAN/KEY_RESVIZ//MONTHLY_AVG_SURFACE_PROPERTIES.ipynb)  
+* ##[MONTHLY_AVG_SURFACE_PROPERTIES.ipynb](http://nbviewer.jupyter.org/urls/bitbucket.org/tjarnikova/analysis-tereza/raw/tip/notebooks/carbon_dev/PI_CARBON_PAPER/MAIN_ANALYSIS/CLEAN/KEY_RESVIZ//MONTHLY_AVG_SURFACE_PROPERTIES.ipynb)  
     
     **NOTEBOOK CONTENTS**  
       
@@ -18,7 +18,7 @@ Descriptions under the links below are from the first cell of the notebooks
         -plots of pH difference (BR-PI) by month for averaged fields at 0, 10, 50m   
         -monthly averaged timeseries of pH values and their differences for the 4 broad subregions  
 
-* ##[MONTHLY_BRvsPI_surfaceplots_DIC_Oma_and_monthly_timeseries.ipynb](http://nbviewer.jupyter.org/urls/bitbucket.org/salishsea/analysis-tereza/raw/tip/notebooks/carbon_dev/PI_CARBON_PAPER/MAIN_ANALYSIS/CLEAN/KEY_RESVIZ//MONTHLY_BRvsPI_surfaceplots_DIC_Oma_and_monthly_timeseries.ipynb)  
+* ##[MONTHLY_BRvsPI_surfaceplots_DIC_Oma_and_monthly_timeseries.ipynb](http://nbviewer.jupyter.org/urls/bitbucket.org/tjarnikova/analysis-tereza/raw/tip/notebooks/carbon_dev/PI_CARBON_PAPER/MAIN_ANALYSIS/CLEAN/KEY_RESVIZ//MONTHLY_BRvsPI_surfaceplots_DIC_Oma_and_monthly_timeseries.ipynb)  
     
     **THIS NOTEBOOK CONTAINS**  
       
