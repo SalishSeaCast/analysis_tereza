@@ -7,11 +7,22 @@ The links below are to static renderings of the notebooks via
 Descriptions under the links below are from the first cell of the notebooks
 (if that cell contains Markdown or raw text).
 
+* ##[MONTHLY_AVG_SURFACE_PROPERTIES.ipynb](http://nbviewer.jupyter.org/urls/bitbucket.org/salishsea/analysis-terez/raw/tip/notebooks/MONTHLY_AVG_SURFACE_PROPERTIES.ipynb)  
+    
+    **NOTEBOOK CONTENTS**  
+      
+        -plots of DIC difference (BR-PI run) by month for averaged fields at 0, 20, 50, 100m  
+        -monthly averaged timeseries of DIC values and their differences for the 4 broad subregions  
+        -plots of OmA difference (BR-PI) by month for averaged fields at 0, 20, 50, 100m   
+        -monthly averaged timeseries of OmA values and their differences for the 4 broad subregions  
+        -plots of pH difference (BR-PI) by month for averaged fields at 0, 10, 50m   
+        -monthly averaged timeseries of pH values and their differences for the 4 broad subregions  
+
 * ##[MONTHLY_BRvsPI_surfaceplots_DIC_Oma_and_monthly_timeseries.ipynb](http://nbviewer.jupyter.org/urls/bitbucket.org/salishsea/analysis-terez/raw/tip/notebooks/MONTHLY_BRvsPI_surfaceplots_DIC_Oma_and_monthly_timeseries.ipynb)  
     
     **THIS NOTEBOOK CONTAINS**  
       
-    -  
+
 
 
 ##License
