@@ -7,6 +7,12 @@ The links below are to static renderings of the notebooks via
 Descriptions under the links below are from the first cell of the notebooks
 (if that cell contains Markdown or raw text).
 
+* ##[MONTHLY_BRvsPI_surfaceplots_DIC_Oma_and_monthly_timeseries.ipynb](http://nbviewer.jupyter.org/urls/bitbucket.org/salishsea/analysis-terez/raw/tip/notebooks/MONTHLY_BRvsPI_surfaceplots_DIC_Oma_and_monthly_timeseries.ipynb)  
+    
+    **THIS NOTEBOOK CONTAINS**  
+      
+    -  
+
 
 ##License
 
