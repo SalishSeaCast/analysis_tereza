@@ -9,6 +9,32 @@ Descriptions under the links below are from the first cell of the notebooks
 
 * ##[OmA_horizon_and_shoaling_maps_and_regional_avgs_using_2algorithms_shallowdeep.ipynb](http://nbviewer.jupyter.org/urls/bitbucket.org/tjarnikova/analysis-tereza/raw/tip/notebooks/carbon_dev/PI_CARBON_PAPER/MAIN_ANALYSIS/CLEAN/KEY_RESVIZ//OmA_horizon_and_shoaling_maps_and_regional_avgs_using_2algorithms_shallowdeep.ipynb)  
     
+    **NOTEBOOK CONTENTS**  
+      
+        -plots of aragonite saturation horizon for summer and winter seasons for BR and PI runs calculated using 2 methods:  
+            shallow: arag. hor. is shallowest undersaturat. water  
+            deep: arag. hor. is shallowest undersaturat. water beneath all supersaturated water  
+        -regional averages as bar plot  
+      
+    **Leading questions:**  
+      
+    **What *are* the saturation horizons? **  
+      
+        Present day values:  
+        -Jdf: ~45m summer / 90m winter  
+        -Nsog ~30m s / ~20m w  
+        -Csog ~40m s / ~25m w  
+        -Haro 60m s / 65m w  
+          
+    **Where do they shoal the most?**  
+      
+        The inner strait (~10m summer, 20-30 m winter)  
+        vs Haro/Jdf (<5 m both summer & winter)  
+      
+    **Does it matter which algorithm you use?**  
+      
+        Once you fix the logic structure, not really.  
+
 * ##[MONTHLY_AVG_mapped_DIC_difference_and_lineplots.ipynb](http://nbviewer.jupyter.org/urls/bitbucket.org/tjarnikova/analysis-tereza/raw/tip/notebooks/carbon_dev/PI_CARBON_PAPER/MAIN_ANALYSIS/CLEAN/KEY_RESVIZ//MONTHLY_AVG_mapped_DIC_difference_and_lineplots.ipynb)  
     
     **NOTEBOOK CONTENTS**  
