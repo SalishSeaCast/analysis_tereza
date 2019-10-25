@@ -64,6 +64,29 @@ Descriptions under the links below are from the first cell of the notebooks
         -YES! seasonal surface drawdown more pronounced in inner strait than JdF  
         - at depth (50m, 200m, see beautiful upwelling signal)  
 
+* ##[Monthly_avg_JAN_JUL_PIBR_oma_Sensitivity.ipynb](http://nbviewer.jupyter.org/urls/bitbucket.org/tjarnikova/analysis-tereza/raw/tip/notebooks/carbon_dev/PI_CARBON_PAPER/MAIN_ANALYSIS/CLEAN/KEY_RESVIZ//Monthly_avg_JAN_JUL_PIBR_oma_Sensitivity.ipynb)  
+    
+    **NOTEBOOK CONTENTS**  
+      
+        For January and July (averaged fields):  
+            plots of averaged: DIC, DIC-TA, & OmA sens. to changes in DIC  
+            2 cases: blanket 10 umol DIC perturbation, and BR-PI perturbation  
+      
+    **Leading questions:**  
+      
+    ** Which regions/ times of year have more DIC difference (PI vs BR)?**  
+          
+        - time of year doesn't matter.  
+        - inner strait has more of a DIC difference than JdF (though blotchy (plume))  
+          
+      
+    **Are different regions of the SS/ times of year more sensitive to perturbations in DIC? **  
+      
+    **Does this track with a large TA-DIC?**  
+      
+    **When doing a uniform 10 $\mu$ mol perturbation, where (and what time of year) is the change in Omega most pronounced?**  
+       
+
 
 ##License
 
