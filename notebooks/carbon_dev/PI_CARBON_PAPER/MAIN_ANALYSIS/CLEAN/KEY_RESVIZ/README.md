@@ -87,6 +87,21 @@ Descriptions under the links below are from the first cell of the notebooks
     **When doing a uniform 10 $\mu$ mol perturbation, where (and what time of year) is the change in Omega most pronounced?**  
        
 
+* ##[MONTHLY_AVG_CO2_surface_flux.ipynb](http://nbviewer.jupyter.org/urls/bitbucket.org/tjarnikova/analysis-tereza/raw/tip/notebooks/carbon_dev/PI_CARBON_PAPER/MAIN_ANALYSIS/CLEAN/KEY_RESVIZ//MONTHLY_AVG_CO2_surface_flux.ipynb)  
+    
+    **NOTEBOOK CONTENTS**  
+      
+        -mean monthly maps of CO2 air-sea flux for preindustrial (PI)  
+        and present-day (BR) run  
+        -line plot of monthly means by region  
+      
+    **Leading questions:**  
+      
+    **When in the year do we switch from ingassing (positive numbers) to outgassing (CO2 out of system, negative numbers)?**  
+      
+    **Which regions are important?**  
+
+
 
 ##License
 
