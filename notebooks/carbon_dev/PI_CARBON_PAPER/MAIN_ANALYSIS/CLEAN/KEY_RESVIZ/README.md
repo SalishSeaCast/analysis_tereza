@@ -94,6 +94,7 @@ Descriptions under the links below are from the first cell of the notebooks
         -mean monthly maps of CO2 air-sea flux for preindustrial (PI)  
         and present-day (BR) run  
         -line plot of monthly means by region  
+        -finish test  
       
     **Leading questions:**  
       
