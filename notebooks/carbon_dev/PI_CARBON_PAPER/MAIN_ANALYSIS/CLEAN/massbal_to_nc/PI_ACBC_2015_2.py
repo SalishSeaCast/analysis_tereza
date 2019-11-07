@@ -29,7 +29,7 @@ import gsw
 import MASSBAL_ncmaker as mb
 
 ncname_BR = 'MASSBAL_PI_ACBC_2015_2_fullyear.nc'
-sdir = 'PI_2nd_2015'
+sdir = 'PI_ACBC_2015_2'
 start = '2015-01-01'
 end = '2015-12-31'
 st = dt.datetime(2015,1,1)
