@@ -1,0 +1,89 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1504
+{\fonttbl\f0\fmodern\fcharset0 Courier;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red255\green255\blue255;\red0\green0\blue0;
+\red255\green255\blue255;\red25\green25\blue25;}
+{\*\expandedcolortbl;\csgray\c100000;\cssrgb\c0\c0\c0;\cssrgb\c100000\c100000\c100000;\cssrgb\c0\c0\c0;
+\cssrgb\c100000\c100000\c100000;\cssrgb\c12941\c12941\c12941;}
+\margl1440\margr1440\vieww27800\viewh14500\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs36 \cf0 README for Evie\'92s extracted dataset. \
+(c) Tereza Jarn\'edkov\'e1, 2019\
+\
+This folder, called FILES_TO_GIVE_EVIE, contains:\
+\
+A) a folder called EXTRACTED_timeseries/\
+B) placesEvie.py\
+C) 7 ipython notebooks explaining various things about the dataset\
+D) this readme (recursion!)\
+\
+A description of A)-C) is below.\
+\
+~~~~A) EXTRACTED_timeseries:~~~~\
+Folder containing the ncs. They are of the naming format $FNAME$_timeseries_$YEAR$.nc, where $FNAME$ can be one of carp, ptrc, prod, TS, or pHOm. For convenience in plotting, I have pretended that Feb 29, 2016 doesn\'92t exist, and have given you a folder called Feb 29, 2016 where you have the data for that day should you want it. \
+\
+In each .nc, I have put together yearly timeseries of the variables of interest. They are nested under each station - for an example of how to use them see PART_D_FOR_EVIE. All variables are daily averaged. Here is a list of the variables and their units\
+\
+In carp_timeseries_$YEAR$.nc we have the following variables:\
+	DIC_timeseries: dissolved inorganic carbon in mmol m-3\
+	TA_timeseries: total alkalinity in mmol m-3\
+	S_timeseries: reference salinity in \cf2 \cb3 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 g kg-1\
+	T_timeseries: conservative temperature in deg C\
+\
+In prod_timeseries_$YEAR$.nc we have the following variables:\
+\pard\pardeftab720\sl320\partightenfactor0
+\cf2     PPPHY_timeseries: \cf4 \cb5 \outl0\strokewidth0 Primary production of small phyto in mmol N/m3/s\cf2 \cb3 \outl0\strokewidth0 \strokec2 \
+	PPDIAT_timeseries: \cf4 \cb5 \outl0\strokewidth0 Primary production of diatoms in mmol N/m3/s\cf2 \cb3 \outl0\strokewidth0 \strokec2 \
+\pard\pardeftab720\sl320\partightenfactor0
+\cf4 \cb5 \outl0\strokewidth0 	PPMRUB_timeseries: Primary production of M. rubrum in mmol N/m3/s\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf4 \cb5 In TS_timeseries_$YEAR$.nc we have the following variables:\
+\pard\pardeftab720\sl320\partightenfactor0
+\cf4 \cb5     S_timeseries: practical salinity in psu\
+	T_timeseries: in situ temperatures in deg C\
+*note that these are just the variables from carp_timeseries, but put in the more regularly used temp and sal formats \
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf4 \cb5 In ptrc_timeseries_$YEAR$.nc we have the following variables:\
+\pard\pardeftab720\sl320\partightenfactor0
+\cf4     ciliates_timeseries: Concentration of small phyto in mmol N/m3\
+	diatoms_timeseries: \cf4 \cb5 Concentration\cf4 \cb5  of diatoms in mmol N/m3\
+	flagellates_timeseries: \cf4 \cb5 Concentration\cf4 \cb5  of M. rubrum in mmol N/m3\
+* If you want model chlorophyll, you have to \cf6 \cb3 \outl0\strokewidth0 \strokec6 multiply (diatoms+flagellates+ciliates)*1.6. \
+* I can do this for you at some point if you\'92d like, but it\'92s trivial \
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf4 \cb5 \outl0\strokewidth0 In pHOm_timeseries_$YEAR$.nc we have the following variables:\
+	OmA_timeseries: Omega A\
+	OmC_timeseries: Omega C\
+	pH_timeseries: pH\
+*these are calculated using the mocsy 2.0 subroutine developed by James Orr, using a bunch of constants (\'91opt\'92). I do this in PART_C_FOR_EVIE. For the paper, you may need to note what the constants were. Here they\'92re listed:\
+    	response_tup = mocsy.mvars(temp=ttera_is, sal=tsra_psu, alk=ttara, dic=tdra, sil=tzero, phos=tzero, patm=tpressure, 		depth=tdepth, lat=tzero, optcon='mol/m3', optt='Tinsitu', optp='m', optb = 'l10', optk1k2='m10', optkf = 'dg', optgas = 		'Pinsitu')\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 \cb1 \kerning1\expnd0\expndtw0 ~~~~B) placesEvie.py:~~~~\
+Your placenames, their lons and lats, and the model grid points that that corresponds to.\
+\
+~~~~C) PART_$SOMETHING$_FOR_EVIE notebooks~~~~\
+Here I\'92ve made a bunch of notebooks explaining how I\'92ve derived your data, and given you some plottind templates. \
+Parts A-C might be good to scan through to understand what I\'92ve done, but you won\'92t really engage with them \
+Part D gives you plotting code. \
+\
+PART_A_FOR_EVIE_Hindcast201905_data_extractor.ipynb\
+	Shows how I go from model output to variable extraction for your given stations, for a single day.\
+	I then put this code in loops for all variable types - I have those saved if you need to see them. \
+PART_B_FOR_EVIE_consolidate_nc_timeseries_carp etc:\
+	Takes the daily outputs from part A and combines them into the timeseries files we see in the folder EXTRACTED_timeseries\
+PART_C_FOR_EVIE_CONVERT_T_S.ipynb\
+	converts model temperature into in situ T and practical salinity\
+PART_C_FOR_EVIE_make_pHOm.ipynb\
+	converts DIC, TA, S, and T into pH, Omega A, and Omega C\
+PART_D_FOR_EVIE_MAKE_PLOTS.ipynb.\
+	plots your stations. \
+	also plots:\
+		pH, OmA, OmC for a given year for all stations\
+		pH, OmA, OmC for a given station for years\
+		in the second plot, I\'92ve included code to pick a threshold value and count, for each year, how many days were below it. \
+		hopefully the code for those plots is written in a way that they can be used as a template\'85}
