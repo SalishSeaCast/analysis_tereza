@@ -49,7 +49,7 @@ def make_nclen(start,end,ftype, sdir):
         tdate = arrow_array[i][0]
         ddmmmyy = tdate.format('DDMMMYY').lower()
         ymd = tdate.format('YYYYMMDD')
-        nc_sens = '/data/tjarniko/results/BASERUN_EXP/' + sdir + '/ncs/SKOG_1d_*'+ ftype +'*' + ymd + '-' + ymd + '.nc'
+        nc_sens = '/data/tjarniko/results/BASERUN_EXP/MAIN/' + sdir + '/ncs/SKOG_1d_*'+ ftype +'*' + ymd + '-' + ymd + '.nc'
         tnc_sens = glob.glob(nc_sens)
         print(tnc_sens[0])
         sens_ar.append(tnc_sens[0])
