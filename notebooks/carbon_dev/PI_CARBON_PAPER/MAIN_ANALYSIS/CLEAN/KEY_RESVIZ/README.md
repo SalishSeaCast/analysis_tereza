@@ -7,106 +7,42 @@ The links below are to static renderings of the notebooks via
 Descriptions under the links below are from the first cell of the notebooks
 (if that cell contains Markdown or raw text).
 
-* ##[OmA_horizon_and_shoaling_maps_and_regional_avgs_using_2algorithms_shallowdeep.ipynb](http://nbviewer.jupyter.org/urls/bitbucket.org/tjarnikova/analysis-tereza/raw/tip/notebooks/carbon_dev/PI_CARBON_PAPER/MAIN_ANALYSIS/CLEAN/KEY_RESVIZ//OmA_horizon_and_shoaling_maps_and_regional_avgs_using_2algorithms_shallowdeep.ipynb)  
+* ##[Carbon_preindustrial_paper_overview.ipynb](http://nbviewer.jupyter.org/urls/bitbucket.org/tjarnikova/analysis-tereza/raw/tip/notebooks/carbon_dev/PI_CARBON_PAPER/MAIN_ANALYSIS/CLEAN/KEY_RESVIZ//Carbon_preindustrial_paper_overview.ipynb)  
     
-    **NOTEBOOK CONTENTS**  
+    **The inorganic carbon balance and fate of anthropogenic carbon in a temperate fjord system**  
       
-        -plots of aragonite saturation horizon for summer and winter seasons for BR and PI runs calculated using 2 methods:  
-            shallow: arag. hor. is shallowest undersaturat. water  
-            deep: arag. hor. is shallowest undersaturat. water beneath all supersaturated water  
-        -regional averages as bar plot  
+    We are trying to write a paper investigating the fate of anthropogenic carbon in a fjord system, using the SalishSeaCast Model, with custom-built carbonate chemistry module, as our tool. The basic idea is to run the SKØG model in 3 configurations - present-day co2 forcing; preindustrial co2 forcing + present-day boundary conditions; and preindustrial co2 forcing + preindustrial boundary conditions.   
       
-    **Leading questions:**  
+    Then we try to see:   
       
-    **What *are* the saturation horizons? **  
+    a) where the extra carbon is   
       
-        Present day values:  
-        -Jdf: ~45m summer / 90m winter  
-        -Nsog ~30m s / ~20m w  
-        -Csog ~40m s / ~25m w  
-        -Haro 60m s / 65m w  
-          
-    **Where do they shoal the most?**  
+    b) how it gets transported thru lateral (b1) and air-sea (b2) boundary and how that balance  changes in the 3 scenarios.  
       
-        The inner strait (~10m summer, 20-30 m winter)  
-        vs Haro/Jdf (<5 m both summer & winter)  
+    c) the effect this has on ecologically-meaningful quantities (eg $\Omega_A$, pH)    
       
-    **Does it matter which algorithm you use?**  
+    This notebook tries to keep track of where the model code is, the run files, the results, and all the different bits of analysis are for a) Tereza, who could stand to be more organized, and b) advisors/collaborators - Debby, Susan, et al. The idea is to put links to relatively tidy notebooks that distill what has been done. The paper is being written on Overleaf.     
       
-        Once you fix the logic structure, not really.  
+    Outline of doc:  
+      
+    * **1a** Model Code/ Config  
+    * **1b** Init atmospheric CO2  
+    * **1c** PI boundary conditions  
+    * **2** Model Runs Description  
+    * **3** Model Evaluations  
+    * **4** Results  
+      
+    QQ means to fill in  
+    TD means... todo  
 
-* ##[MONTHLY_AVG_mapped_DIC_difference_and_lineplots.ipynb](http://nbviewer.jupyter.org/urls/bitbucket.org/tjarnikova/analysis-tereza/raw/tip/notebooks/carbon_dev/PI_CARBON_PAPER/MAIN_ANALYSIS/CLEAN/KEY_RESVIZ//MONTHLY_AVG_mapped_DIC_difference_and_lineplots.ipynb)  
+* ##[ALL3runs_MASSBAL_FATE_anthropogenic_carbon.ipynb](http://nbviewer.jupyter.org/urls/bitbucket.org/tjarnikova/analysis-tereza/raw/tip/notebooks/carbon_dev/PI_CARBON_PAPER/MAIN_ANALYSIS/CLEAN/KEY_RESVIZ//ALL3runs_MASSBAL_FATE_anthropogenic_carbon.ipynb)  
     
-    **NOTEBOOK CONTENTS**  
-      
-        -plots of DIC difference (BR-PI run) by month for averaged fields at 0, 20, 50, 100, 200 m  
-        -monthly averaged timeseries of DIC values and their differences for the 4 broad subregions  
-        -extra DIC by region and depth on one plot  
-      
-    **Leading questions:**  
-      
-    **Does the magnitude extra surface DIC vary much by month, depth, & region?**  
-          
-    **By month:**  
-          
-        -no interesting pattern in surface, possibly increase in N./C. strait at depth in summer  
-          
-    **By depth:**  
-        -in general, accross all regions, deeper regions have less extra DIC  
-        -surface extra DIC is very blotchy ('stochastic')  
-       
-    **By region:**  
-        -N./C. strait have marginally more extra DIC (and more variable) DIC than Haro,   
-        - JdF has considerably less extra DIC than the above 3  
-          
-    **Do we reproduce coastal high-carbon signal, seasonal surface drawdown?**  
-      
-        -YES! seasonal surface drawdown more pronounced in inner strait than JdF  
-        - at depth (50m, 200m, see beautiful upwelling signal)  
-
-* ##[Monthly_avg_JAN_JUL_PIBR_oma_Sensitivity.ipynb](http://nbviewer.jupyter.org/urls/bitbucket.org/tjarnikova/analysis-tereza/raw/tip/notebooks/carbon_dev/PI_CARBON_PAPER/MAIN_ANALYSIS/CLEAN/KEY_RESVIZ//Monthly_avg_JAN_JUL_PIBR_oma_Sensitivity.ipynb)  
+* ##[ALL3runs_MASSBAL_BR_LA_PI.ipynb](http://nbviewer.jupyter.org/urls/bitbucket.org/tjarnikova/analysis-tereza/raw/tip/notebooks/carbon_dev/PI_CARBON_PAPER/MAIN_ANALYSIS/CLEAN/KEY_RESVIZ//ALL3runs_MASSBAL_BR_LA_PI.ipynb)  
     
-    **NOTEBOOK CONTENTS**  
-      
-        For January and July (averaged fields):  
-            plots of averaged: DIC, DIC-TA, & OmA sens. to changes in DIC  
-            2 cases: blanket 10 umol DIC perturbation, and BR-PI perturbation  
-      
-    **Leading questions:**  
-      
-    ** Which regions/ times of year have more DIC difference (PI vs BR)?**  
-          
-        - time of year doesn't matter.  
-        - inner strait has more of a DIC difference than JdF (though blotchy (plume))  
-          
-      
-    **Are different regions of the SS/ times of year more sensitive to perturbations in DIC? **  
-      
-    **Does this track with a large TA-DIC?**  
-      
-    **When doing a uniform 10 $\mu$ mol perturbation, where (and what time of year) is the change in Omega most pronounced?**  
-       
-
-* ##[MONTHLY_AVG_CO2_surface_flux.ipynb](http://nbviewer.jupyter.org/urls/bitbucket.org/tjarnikova/analysis-tereza/raw/tip/notebooks/carbon_dev/PI_CARBON_PAPER/MAIN_ANALYSIS/CLEAN/KEY_RESVIZ//MONTHLY_AVG_CO2_surface_flux.ipynb)  
-    
-    **NOTEBOOK CONTENTS**  
-      
-        -mean monthly maps of CO2 air-sea flux for preindustrial (PI)  
-        and present-day (BR) run  
-        -line plot of monthly means by region  
-        -finish test  
-      
-    **Leading questions:**  
-      
-    **When in the year do we switch from ingassing (positive numbers) to outgassing (CO2 out of system, negative numbers)?**  
-      
-    **Which regions are important?**  
-
-
 
 ##License
 
-These notebooks and files are copyright 2013-2019
+These notebooks and files are copyright 2013-2020
 by the Salish Sea MEOPAR Project Contributors
 and The University of British Columbia.
 
