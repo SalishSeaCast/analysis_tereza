@@ -27,6 +27,8 @@ notebooks/carbon_dev/CCCmaDEV/hind_2018012/*.png
 notebooks/carbon_dev/*/OLD
 notebooks/carbon_dev/BASE_RUN/CLEAN/OmA/old/*
 *.pkl
+*.pkl3
+*.pkl
 *.key
 *.nc
 *.mat

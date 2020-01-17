@@ -62,7 +62,17 @@ def OmA_3D(grid,carp):
     ttemp = grid.variables['votemper'][0,:,:,:]
     tdic = carp.variables['dissolved_inorganic_carbon'][0,:,:,:]
     tta = carp.variables['total_alkalinity'][0,:,:,:]
+    
+    test_LO = nc.Dataset('/results/forcing/LiveOcean/boundary_conditions/LiveOcean_v201905_y2018m01d01.nc')
+    zlevels = (test_LO['deptht'][:])
 
+    depths = np.zeros([40,898,398])
+
+    for j in range(0,898):
+        for i in range(0,398):
+            depths[:,j,i] = zlevels
+            
+    tdepths = np.ravel(depths)
     tsra = np.ravel(tsal)
     ttera = np.ravel(ttemp)
     ttara = np.ravel(tta) * 1e-3
@@ -76,15 +86,16 @@ def OmA_3D(grid,carp):
     ttera_is = gsw.t_from_CT(tsra,ttera,tzero)
 
     response_tup = mocsy.mvars(temp=ttera_is, sal=tsra_psu, alk=ttara, dic=tdra, 
-                       sil=tzero, phos=tzero, patm=tpressure, depth=tzero, lat=tzero, 
+                       sil=tzero, phos=tzero, patm=tpressure, depth=tdepths, lat=tzero, 
                         optcon='mol/m3', optt='Tinsitu', optp='m',
                         optb = 'l10', optk1k2='m10', optkf = 'dg', optgas = 'Pinsitu')
     pH,pco2,fco2,co2,hco3,co3,OmegaA,OmegaC,BetaD,DENis,p,Tis = response_tup
 
     pHr = pH.reshape(40,898,398)
     OmAr = OmegaA.reshape(40,898,398)
+    OmCr = OmegaC.reshape(40,898,398)
     
-    return pHr, OmAr
+    return pHr, OmAr, OmCr
 
 ############let's get extractin bro
 
@@ -104,7 +115,7 @@ for i in range(0,365):
     grid = nc.Dataset(tgrid)
     fn = fn_ar[i]
     
-    pHr, OmAr = OmA_3D(grid,carp)
+    pHr, OmAr, OmCr = OmA_3D(grid,carp)
 
     tdir = '/data/tjarniko/results/BASERUN_EXP/MAIN/OmA_pH_calculated/'
     ncname = tdir + fn
@@ -119,5 +130,7 @@ for i in range(0,365):
     ts[:] = pHr
     ts2 = g.createVariable('OmAr','f4',('depths','ydir','xdir'))
     ts2[:] = OmAr
+    ts3 = g.createVariable('OmCr','f4',('depths','ydir','xdir'))
+    ts3[:] = OmCr
 
     f.close()
