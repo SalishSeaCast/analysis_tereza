@@ -74,6 +74,7 @@ def find_model_dat(w, fname, datname, firstmo, yr, path_to_ncs):
     
     #extract model depths from model, for comparison with obs
     q2 = nc.Dataset('/results2/SalishSea/hindcast.201905/07apr10/SalishSea_1h_20100407_20100407_grid_T.nc')
+
     dep=q2.variables['deptht']
     d_mod = dep[:]  
 
@@ -98,7 +99,7 @@ def find_model_dat(w, fname, datname, firstmo, yr, path_to_ncs):
 
         bigpath = path_to_ncs
         #print(datname)
-        ncpath = '/SKOG_1d_*'+ datname +'_T_' + ymd + '-' + ymd + '.nc'
+        ncpath = '/' + datname + '_1d_' + ymd + '.nc'
         q = glob.glob(bigpath+ncpath)
         
         #depths of observations
@@ -115,7 +116,8 @@ def find_model_dat(w, fname, datname, firstmo, yr, path_to_ncs):
         qnc = nc.Dataset(q[0])
         #print(qnc)
         #print(fname)
-        model_dat = qnc.variables[fname][0,t_depth,j,i]
+        
+        model_dat = qnc['model_output'][fname][t_depth,j,i]
         # flag spots where model gives 0s. 
         if (model_dat == 0):
         # we have     

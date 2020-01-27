@@ -1,6 +1,6 @@
-start = '2017-01-01'
-end = '2017-12-31'
-noday = 365
+start = '2012-01-01'
+end = '2012-12-31'
+noday = 366
 
 import matplotlib.pyplot as plt
 import netCDF4 as nc
