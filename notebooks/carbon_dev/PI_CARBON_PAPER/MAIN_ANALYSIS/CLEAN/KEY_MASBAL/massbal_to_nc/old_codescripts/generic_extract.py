@@ -28,19 +28,27 @@ def generic_extract_fxn(start, end, ftype, sdir, sdir_short, varname):
     wdir = grid['e3t_0'][0,:,:,:]
     tmask = grid['tmask'][0,:,:,:]
 
-    # w = np.array([[2,3],[2,3]])
-    # x = np.array([[2,4],[2,3]])
-    # print(w*x)
-    surfa = vdir*udir
-    surfa_broad = np.zeros([40,898,398])
-    for i in range(0,40):
-        surfa_broad[i,:,:] = surfa
+    # #ok so here our tmask is 1 iff we have an ocean, 
+    # print(np.shape(tmask))
+    # print('got this far')
+    # #we set it to 0 at the 20 cell border to not worry about the sides of the domain
+    # #we also set tdat (our variable) that way 
+    #tmask[:,878:898,:] = 0
+    #tmask[:,:,0:20] = 0
+    # # tdat[:,878:898,:] = 0
+    # # tdat[:,:,0:20] = 0
 
-    csize_recalc = surfa_broad*wdir*tmask
-    csize_recalc[:,878:898,:] = 0
-    csize_recalc[:,:,0:20] = 0
-    csize_recalc[csize_recalc==0] = np.nan
-    cellsize = csize_recalc
+    #surface area for every cell
+    surfa = udir*vdir
+
+    #broadcast surface area 
+    surfa_broadcast = np.zeros((40, 898, 398))
+
+    for d in range(0,40):
+        surfa_broadcast[d,:,:] = surfa[:,:]
+
+    #finally we have the cell size for every cell in the system. it's 0 if the cell is not water in the domain we want
+    cellsize = surfa_broadcast*wdir*tmask
 
 
     BR_sums_perday = np.zeros((40,365))
@@ -71,29 +79,25 @@ def generic_extract_fxn(start, end, ftype, sdir, sdir_short, varname):
     
     print('done making nclen')
 
-    for i in range(0,dayslen):
+    for i in range(0,365):
 
         if (i%5 ==0):
             print(i)
 
         t_test = nc.Dataset(BR_ar[i])
         tdat = t_test[varname][:]
-        tdat[:,878:898,:] = np.nan
-        tdat[:,:,0:20] = np.nan
-        tdat[tdat == 0] = np.nan
+        tdat[:,878:898,:] = 0
+        tdat[:,:,0:20] = 0
         tdat_fc = tdat[0,:,:,:]
         tdat_withvol = tdat_fc*cellsize
-        tdat_alldomain = np.nansum(np.nansum(tdat_withvol,axis = 1),axis = 1)
-        if (i%5 ==0):
-            print(tdat_withvol[:,250,250])
-            print('assigned nans, they really should show up')
-            print(tdat_alldomain)
+        tdat_alldomain = np.sum(np.sum(tdat_withvol,axis = 1),axis = 1)
+
         BR_sums_perday[:,i] =  tdat_alldomain
 
 
-    fname = sdir_short + '_'+varname+'_sums_perday_alg2.pkl'
+    fname = sdir_short + '_'+varname+'_sums_perday.pkl'
     pickle.dump(BR_sums_perday, open(fname, 'wb'))
-    pickle.dump(cellsize, open("cellsize_alg2.pkl", 'wb'))
+    pickle.dump(cellsize, open("cellsize.pkl", 'wb'))
     
     return
 
@@ -119,8 +123,8 @@ def generic_extract_fxn(start, end, ftype, sdir, sdir_short, varname):
         
 #     return sens_ar
 # start = '2015-01-01'
-# end = '2015-03-01'
-# ftype = 'ptrc'
-# sdir = 'PILA3_rerun/LA3'
-# sdir_short = 'LA3'
-# varname = 'nitrate'
+# end = '2015-12-31'
+# ftype = 'carp'
+# sdir = 'MAIN/BR_2nd_2015'
+# sdir_short = 'BR_2nd_2015'
+# varname = 'dissolved_inorganic_carbon'

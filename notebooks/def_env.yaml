@@ -1,0 +1,17 @@
+name: def_env
+
+channels: 
+  - conda-forge
+  - defaults
+
+dependencies:
+  - arrow
+  - jupyterlab
+  - numpy
+  - matplotlib
+  - netCDF4
+  - pandas
+  - mocsy
+  - python=3
+  - xarray
+  - cmocean

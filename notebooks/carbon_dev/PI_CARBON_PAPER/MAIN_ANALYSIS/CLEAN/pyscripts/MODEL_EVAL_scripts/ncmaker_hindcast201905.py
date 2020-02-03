@@ -23,28 +23,34 @@ print(start)
 
 ## changeable input vars
 
+# ncnames = ['sal_hindcast201905_GRL_comp_2007.nc','sal_hindcast201905_GRL_comp_2008.nc',
+#           'sal_hindcast201905_GRL_comp_2009.nc','sal_hindcast201905_GRL_comp_2010.nc',
+#           'sal_hindcast201905_GRL_comp_2011.nc','sal_hindcast201905_GRL_comp_2012.nc',
+#           'sal_hindcast201905_GRL_comp_2013.nc','sal_hindcast201905_GRL_comp_2014.nc',
+#           'sal_hindcast201905_GRL_comp_2015.nc','sal_hindcast201905_GRL_comp_2016.nc',
+#           'sal_hindcast201905_GRL_comp_2017.nc']
+           
+# datnames = ['grid','grid','grid','grid','grid','grid','grid','grid','grid','grid','grid']
+# fnames = ['sal','sal','sal','sal','sal','sal','sal','sal','sal','sal','sal']
+# firstmos = [1,1,1,1,1,1,1,1,1,1,1]
+# yrs = ['07','08','09','10','11','12','13','14','15','16','17']
+
+
 bigpath = '/data/tjarniko/results/hindcast.201905_dayavg/'
 
-ncnames = ['DIC_hindcast201905_GRL_comp_2007.nc','DIC_hindcast201905_GRL_comp_2008.nc',
-          'DIC_hindcast201905_GRL_comp_2009.nc','DIC_hindcast201905_GRL_comp_2010.nc',
-          'DIC_hindcast201905_GRL_comp_2011.nc','DIC_hindcast201905_GRL_comp_2012.nc',
-          'DIC_hindcast201905_GRL_comp_2013.nc','DIC_hindcast201905_GRL_comp_2014.nc',
-          'DIC_hindcast201905_GRL_comp_2015.nc','DIC_hindcast201905_GRL_comp_2016.nc',
-          'DIC_hindcast201905_GRL_comp_2017.nc']
+ncnames = ['TA_hindcast201905_GRL_comp_2007.nc','TA_hindcast201905_GRL_comp_2008.nc',
+          'TA_hindcast201905_GRL_comp_2009.nc','TA_hindcast201905_GRL_comp_2010.nc',
+          'TA_hindcast201905_GRL_comp_2011.nc','TA_hindcast201905_GRL_comp_2012.nc',
+          'TA_hindcast201905_GRL_comp_2013.nc','TA_hindcast201905_GRL_comp_2014.nc',
+          'TA_hindcast201905_GRL_comp_2015.nc','TA_hindcast201905_GRL_comp_2016.nc',
+          'TA_hindcast201905_GRL_comp_2017.nc']
            
 datnames = ['carp','carp','carp','carp','carp','carp','carp','carp','carp','carp','carp']
-fnames = ['DIC','DIC','DIC','DIC','DIC','DIC','DIC','DIC','DIC','DIC','DIC']
+fnames = ['TA','TA','TA','TA','TA','TA','TA','TA','TA','TA','TA']
 firstmos = [1,1,1,1,1,1,1,1,1,1,1]
 yrs = ['07','08','09','10','11','12','13','14','15','16','17']
 
-#ncnames = ['NO3_BR2015_modeloutput_for_GRL_comparison.nc']
-           
-#datnames = ['ptrc']
-#fnames = ['nitrate']
-#firstmos = [1]
-#yrs = ['15']
 
-##
 
 
 infil = loadtxt('/data/tjarniko/MEOPAR/at3/notebooks/carbon_dev/DATASETS/grl2016_edit2.txt')
