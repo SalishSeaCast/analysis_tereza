@@ -17,7 +17,7 @@ def generic_extract_fxn(start, end, ftype, sdir, sdir_short, varname):
     import glob
     import arrow
     import gsw
-    #import gef
+    import gef
     import pickle
     
     
@@ -51,29 +51,26 @@ def generic_extract_fxn(start, end, ftype, sdir, sdir_short, varname):
     
     print('done making nclen')
 
-    for i in range(0,dayslen):
+    for i in range(0,365):
 
         if (i%5 ==0):
             print(i)
-            #print('what the hell')
-        print(BR_ar[i])
+
         t_test = nc.Dataset(BR_ar[i])
-        
         tdat = t_test[varname][:]
         tdat[:,878:898,:] = np.nan
         tdat[:,:,0:20] = np.nan
         tdat[tdat == 0] = np.nan
         tdat_fc = tdat[0,:,:,:]
-        tdat_alldomain = np.zeros([40])
-        for q in range(0,40):
-            tdat_alldomain[q] = np.nanmean(tdat_fc[q,:,:])
-        
-        
 
+        tdat_alldomain = np.nanmean(np.nanmean(tdat_fc,axis = 1),axis = 1)
+        if (i%5 ==0):
+            print('assigned nans, they really should show up')
+            print(tdat_alldomain)
         BR_means_perday[:,i] =  tdat_alldomain
 
 
-    fname = sdir_short + '_'+varname+'_means_perday_alg2.pkl'
+    fname = sdir_short + '_'+varname+'_means_perday.pkl'
     pickle.dump(BR_means_perday, open(fname, 'wb'))
 
     

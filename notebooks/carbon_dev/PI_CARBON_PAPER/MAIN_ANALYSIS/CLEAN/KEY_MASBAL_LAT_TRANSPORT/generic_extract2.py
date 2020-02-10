@@ -17,7 +17,7 @@ def generic_extract_fxn(start, end, ftype, sdir, sdir_short, varname):
     import glob
     import arrow
     import gsw
-    import gef
+    #import gef
     import pickle
     
     
@@ -75,6 +75,7 @@ def generic_extract_fxn(start, end, ftype, sdir, sdir_short, varname):
 
         if (i%5 ==0):
             print(i)
+            #print('what the hell')
 
         t_test = nc.Dataset(BR_ar[i])
         tdat = t_test[varname][:]
@@ -84,10 +85,10 @@ def generic_extract_fxn(start, end, ftype, sdir, sdir_short, varname):
         tdat_fc = tdat[0,:,:,:]
         tdat_withvol = tdat_fc*cellsize
         tdat_alldomain = np.nansum(np.nansum(tdat_withvol,axis = 1),axis = 1)
-        if (i%5 ==0):
-            print(tdat_withvol[:,250,250])
-            print('assigned nans, they really should show up')
-            print(tdat_alldomain)
+        #if (i%5 ==0):
+            #print(tdat_withvol[:,250,250])
+            #print('assigned nans, they really should show up')
+            #print(tdat_alldomain)
         BR_sums_perday[:,i] =  tdat_alldomain
 
 
