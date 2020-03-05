@@ -1,0 +1,90 @@
+**ECOLOGY_PROJECT (Benthic OmA):
+
+    carbon_dev/ECOLOGY_PROJECT/
+        BR_OmA_year_benthos_mbath.pkl  
+        PI_OmA_year_benthos_mbath.pkl
+        
+        description: 12*898*398, average benthic OmA for BR and PI
+        
+        how made: /carbon_dev/ECOLOGY_PROJECT/extraction pyscripts are in /carbon_dev/ECOLOGY_PROJECT/extraction_pyscripts_and_intermediate_pickles/ of format extract_avg_monthly_feb.py (go straight from actual model results to pickles containing monthly average benthic OmA...). PI_OmA_year_benthos_mbath.pkl is just a combination of the monthly .pkls
+        
+**ARAGONITE_SATURATION:
+
+    carbon_dev/PI_CARBON_PAPER/MAIN_ANALYSIS/CLEAN/KEY_OMA/OmA_current_ncs
+        BR_OmA.nc  
+        LA_OmA.nc
+        PI_OmA.nc
+        
+        description:
+        how made: daily pH, OmA extracted by, eg: /KEY_OMA/EXTRACT_HORIZON_08jan20/PI_oma_ph_extract.py and stored in /data/tjarniko/results/BASERUN_EXP/MAIN/OmA_pH_calculated
+        then consolidated by: KEY_OMA/EXTRACT_HORIZON_08jan20/yearly_OmA.ipynb
+        
+        fixed to use a non-0 depth
+        
+**ARAGONITE_SATURATION_HORIZON:
+    
+    carbon_dev/PI_CARBON_PAPER/MAIN_ANALYSIS/CLEAN/KEY_OMA/OMA_current_NCS/
+        BR_OmA_horizon_DEEPALG.nc
+        LA_OmA_horizon_DEEPALG.nc
+        PI_OmA_horizon_DEEPALG.nc
+        
+        description:
+        how made: acts on BR_OmA.nc, slow algorithm, needs to be paralelized. extraction files are in KEY_OMA/EXTRACT_HORIZON_08jan20/ and are of form STITCHER_DEEP*.py
+        these are then stitched together to make the whole thing, which is done by spatial_OmAhorizon_plots_stitcher_newalg.ipynb
+        
+**ARAGONITE_SATURATION volume undersaturated (pickles):
+
+    carbon_dev/PI_CARBON_PAPER/MAIN_ANALYSIS/CLEAN/KEY_RESVIZ/
+        BR_OmA.nc  
+        LA_OmA.nc
+        PI_OmA.nc
+        
+        description:
+        how made: notebook in OmA_percent_domain_cells_undersaturated
+        pickles in 
+        
+        
+**DAILY AVGS FOR hindcast.201905:        
+    
+    in /data/tjarniko/results/hindcast.201905_dayavg
+    
+    description:
+    how made: eg PI_CARBON_PAPER/MAIN_ANALYSIS/CLEAN/KEY_MODEVAL/pyscripts_for_making_1davg/
+    using things like: carp_1d_extract_2013.py same with grid_2013.py
+    
+**MODEL EVAL for hindcast.201905:
+
+    model eval notebook: 
+    model eval extracted files:
+    how made: 
+    
+**mass balances by layer:
+
+    files in: /PI_CARBON_PAPER/MAIN_ANALYSIS/CLEAN/KEY_MASBAL_LAT_TRANSPORT/
+    how made: in generic_extract_mean2.py and generic_extract.py
+    
+    usage, eg: 
+    start = '2015-01-01'
+    end = '2015-06-29'
+    sdir = 'PILA3_rerun/LA3'
+    sdir_short = 'LA3'
+    ftype = 'carp'
+    varname = 'dissolved_inorganic_carbon'
+    import generic_extract2 as ge
+    ge.generic_extract_fxn(start,end,ftype,sdir,sdir_short,varname)
+    
+    creates pickles with by-layer balance of a given variable, name format sdir_short_varname_sums_per_dayalg2.pkl, eg PI_2nd_2015_vosaline_sums_perday_alg2.pkl
+    
+**JDF/JS fluxes balances by layer:
+
+    files in: /PI_CARBON_PAPER/MAIN_ANALYSIS/CLEAN/KEY_MASBAL_LAT_TRANSPORT/
+    how made: generic_JDF_flux_extract.py / generic_JS_flux_extract.py
+    *in mol/day
+    usage: called in, eg: by_layer_transportmaker
+    
+**AS fluxes balances:
+
+    files in: /PI_CARBON_PAPER/MAIN_ANALYSIS/CLEAN/KEY_MASBAL_LAT_TRANSPORT/
+    how made: generic_AS_flux_extract.py 
+    *in mol/day
+    usage: called in, eg: by_layer_transportmaker
