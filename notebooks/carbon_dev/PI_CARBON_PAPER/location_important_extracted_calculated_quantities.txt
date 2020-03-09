@@ -34,16 +34,11 @@
         
 **ARAGONITE_SATURATION volume undersaturated (pickles):
 
-    carbon_dev/PI_CARBON_PAPER/MAIN_ANALYSIS/CLEAN/KEY_RESVIZ/
-        BR_OmA.nc  
-        LA_OmA.nc
-        PI_OmA.nc
+    carbon_dev/PI_CARBON_PAPER/MAIN_ANALYSIS/CLEAN/KEY_OMA/domain_undersat_pickles
         
         description:
-        how made: notebook in OmA_percent_domain_cells_undersaturated
-        pickles in 
-        
-        
+        how made: notebook in OmA_percent_domain_cells_undersaturated_calculator
+       
 **DAILY AVGS FOR hindcast.201905:        
     
     in /data/tjarniko/results/hindcast.201905_dayavg
