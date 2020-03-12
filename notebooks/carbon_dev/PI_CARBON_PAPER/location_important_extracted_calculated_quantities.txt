@@ -21,6 +21,12 @@
         
         fixed to use a non-0 depth
         
+**ARAGONITE_SATURATION (hindcast):
+
+    Oma/OmC,pH,pco2 in: /data/tjarniko/results/hindcast.201905_dayavg_OmA-pH-pCO2
+    description how made: eg KEY_AIRSEAFLUX/pyscripts_oma_pco2_extract/Oma_2012.py
+        this is acting on DAILY AVGS FOR hindcast.201905 (see below)
+        
 **ARAGONITE_SATURATION_HORIZON:
     
     carbon_dev/PI_CARBON_PAPER/MAIN_ANALYSIS/CLEAN/KEY_OMA/OMA_current_NCS/
@@ -41,7 +47,7 @@
        
 **DAILY AVGS FOR hindcast.201905:        
     
-    in /data/tjarniko/results/hindcast.201905_dayavg
+    in /data/tjarniko/results/hindcast.201905_dayavg_DIC-TA-T-S (renamed from hindcast.201905_dayavg)
     
     description:
     how made: eg PI_CARBON_PAPER/MAIN_ANALYSIS/CLEAN/KEY_MODEVAL/pyscripts_for_making_1davg/
