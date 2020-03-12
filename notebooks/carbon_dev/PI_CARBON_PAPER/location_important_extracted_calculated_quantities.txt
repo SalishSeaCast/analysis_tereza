@@ -21,11 +21,14 @@
         
         fixed to use a non-0 depth
         
-**ARAGONITE_SATURATION (hindcast):
+**ARAGONITE_SATURATION (hindcast and BRPILA runs):
 
+    for hindcast:
     Oma/OmC,pH,pco2 in: /data/tjarniko/results/hindcast.201905_dayavg_OmA-pH-pCO2
-    description how made: eg KEY_AIRSEAFLUX/pyscripts_oma_pco2_extract/Oma_2012.py
-        this is acting on DAILY AVGS FOR hindcast.201905 (see below)
+    for the PILA runs: /data/tjarniko/results/BASERUN_EXP/Oma_calc
+    
+    description how made: eg KEY_AIRSEAFLUX/pyscripts_oma_pco2_extract/Oma_2012.py or BR3.py for the PILA run
+        this is acting on DAILY AVGS FOR hindcast.201905 (see below) or the ncs in BASERUN_EXP for the PILA runs
         
 **ARAGONITE_SATURATION_HORIZON:
     
