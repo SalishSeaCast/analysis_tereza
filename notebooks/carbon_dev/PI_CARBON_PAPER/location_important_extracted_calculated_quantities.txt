@@ -92,3 +92,12 @@
     how made: generic_AS_flux_extract.py 
     *in mol/day
     usage: called in, eg: by_layer_transportmaker
+    
+    files in: /PI_CARBON_PAPER/MAIN_ANALYSIS/CLEAN/KEY_RESVIS (BR_flx etc)
+    how made - not sure, but very clearly just 365*898*398
+    
+**Fraser river runoff
+
+    made in: /PI_CARBON_PAPER/MAIN_ANALYSIS/CLEAN/KEY_RESVIS    Fig2_carbon_balance.ipynb
+    files in KEY_RESVIS/pkls
+    
