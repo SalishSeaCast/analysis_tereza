@@ -94,7 +94,7 @@ def extractor(start, end, ftype, sdir, varname, fname,  inletmask = False):
 
         daily_means[:,i] =  tdat_alldomain
 
-    fname = './pkls/' + fname + '.pkl'
+    fname =  fname + '.pkl'
     pickle.dump(daily_means, open(fname, 'wb'))
     
     return

@@ -1,8 +1,8 @@
 KEY_AIRSEAFLUX
 
     BR_flx etc:
-    files in: PI_CARBON_PAPER/MAIN_ANALYSIS/pkls/flux (BR_flx etc)
-        how made - not sure, but very clearly just 365*898*398
+    files in: PI_CARBON_PAPER/MAIN_ANALYSIS/pkls/flux (BR3_flx etc)
+        how made - in bylayer_massbalance_puzzle_BR3_PI4 - this is in mmol/m2/s
 
     hindcast2015_co2_flx etc (daily averages):
     files in PI_CARBON_PAPER/MAIN_ANALYSIS/pkls/flux (BR_flx etc)

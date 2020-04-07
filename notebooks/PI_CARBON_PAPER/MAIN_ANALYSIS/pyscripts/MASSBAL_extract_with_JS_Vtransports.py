@@ -33,7 +33,7 @@ sys.path.append('/data/tjarniko/MEOPAR/at3/notebooks/carbon_dev/CCCmaDEV/CCCma_s
 import mocsy
 import CCCma
 import CCCma_stations as cs
-from matplotlib import reload
+#from matplotlib import reload
 import arrow
 import gsw
 
@@ -49,11 +49,12 @@ en = dt.datetime(2015,12,31)
 st3 = dt.datetime(2015,1,1)
 en3 = dt.datetime(2015,12,31)
 
-ncname_BR = 'MASSBAL_BR2015_to1231_spunup.nc'
-ncname_PI = 'MASSBAL_PI2015_to1231_spunup.nc'
+tdir = '/data/tjarniko/MEOPAR/analysis_tereza/notebooks/PI_CARBON_PAPER/MAIN_ANALYSIS/pkls/'
+ncname_BR = tdir + 'MASSBAL_BR3.nc'
+ncname_PI = tdir + 'MASSBAL_PI4.nc'
 
-sdir = '/data/tjarniko/results/BR_2nd_2015_cop/SKOG_2/ncs/'
-sdir3 = '/data/tjarniko/results/PREIND_2nd_2015/PI_2/ncs/'
+sdir = '/data/tjarniko/results/BASERUN_EXP/MAIN/BR_3rd_2015/ncs/'
+sdir3 = '/data/tjarniko/results/BASERUN_EXP/PILA4/PI4/ncs/'
 
 y_st = st.timetuple().tm_yday
 print(y_st)

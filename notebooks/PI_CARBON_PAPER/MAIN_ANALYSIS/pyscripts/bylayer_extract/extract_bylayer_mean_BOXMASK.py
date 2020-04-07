@@ -1,4 +1,4 @@
-def extractor(start, end, ftype, sdir, varname, fname):
+def extractor(start, end, ftype, sdir, varname, fname, y, x):
 
     '''USAGE:
     
@@ -43,7 +43,7 @@ def extractor(start, end, ftype, sdir, varname, fname):
     mask = np.zeros([1,40,898,398])
     #box mask - just doing a small subset 
     
-    mask[:,:,490:490+30,230:230+30] = 4
+    mask[:,:,y-10:y+10,x-10:x+10] = 4
     
     
     #where to store
@@ -98,7 +98,7 @@ def extractor(start, end, ftype, sdir, varname, fname):
 
         daily_means[:,i] =  tdat_alldomain
 
-    fname = './pkls/' + fname + '.pkl'
+    fname =  fname + '.pkl'
     pickle.dump(daily_means, open(fname, 'wb'))
     
     return
