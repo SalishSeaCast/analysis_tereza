@@ -1,7 +1,7 @@
-start = '2015-12-16'
+start = '2015-01-01'
 end = '2015-12-31'
-runname = 'PI4'
-ncdir ='/data/tjarniko/results/BASERUN_EXP/PILA4/PI4/ncs'
+runname = 'BR3'
+ncdir ='/data/tjarniko/results/BASERUN_EXP/MAIN/BR_3rd_2015/ncs'
 ## too much import things
 import matplotlib.pyplot as plt
 import netCDF4 as nc
@@ -36,9 +36,7 @@ def make_nclen(start,end,ftype):
         ddmmmyy = tdate.format('DDMMMYY').lower()
         ymd = tdate.format('YYYYMMDD')
         nc_sens = ncdir + '/SKOG_1d*'+ ftype +'*' + ymd + '.nc'
-        print(nc_sens)
         tnc_sens = glob.glob(nc_sens)
-        print(tnc_sens)
         fn_ar.append(tnc_sens[0])
 
     return fn_ar
@@ -55,7 +53,7 @@ def make_fname_ar(start,end):
     for i in range(0,dayslen):
         tdate = arrow_array[i][0]
         ymd = tdate.format('YYYYMMDD')
-        fname = runname + '_OmA_plus_' + ymd +'.nc'
+        fname = runname + '_Revelle_' + ymd +'.nc'
         fn_ar.append(fname)
     
     return fn_ar
@@ -94,12 +92,9 @@ def OmA_3D(grid,carp):
                         optb = 'l10', optk1k2='m10', optkf = 'dg', optgas = 'Pinsitu')
     pH,pco2,fco2,co2,hco3,co3,OmegaA,OmegaC,BetaD,DENis,p,Tis = response_tup
 
-    pHr = pH.reshape(40,898,398)
-    OmAr = OmegaA.reshape(40,898,398)
-    OmCr = OmegaC.reshape(40,898,398)
-    pco2r = pco2.reshape(40,898,398)
+    BetaDr = BetaD.reshape(40,898,398)
     
-    return pHr, OmAr, OmCr, pco2r
+    return BetaDr
 
 ############let's get extractin bro
 
@@ -116,7 +111,7 @@ for i in range(0,len(fn_ar)):
     grid = nc.Dataset(tgrid)
     fn = fn_ar[i]
     
-    pHr, OmAr, OmCr, pco2r = OmA_3D(grid,carp)
+    BetaDr = OmA_3D(grid,carp)
 
     tdir = '/data/tjarniko/results/BASERUN_EXP/Oma_calc/'
     ncname = tdir + fn
@@ -127,13 +122,7 @@ for i in range(0,len(fn_ar)):
     g.createDimension('ydir',898)
     g.createDimension('xdir',398)
 
-    ts = g.createVariable('pH','f4',('depths','ydir','xdir'))
-    ts[:] = pHr
-    ts2 = g.createVariable('OmA','f4',('depths','ydir','xdir'))
-    ts2[:] = OmAr
-    ts3 = g.createVariable('OmC','f4',('depths','ydir','xdir'))
-    ts3[:] = OmCr
-    ts = g.createVariable('pCO2','f4',('ydir','xdir'))
-    ts[:] = pco2r[0,:,:]
+    ts = g.createVariable('RF','f4',('depths','ydir','xdir'))
+    ts[:] = BetaDr
 
     f.close()

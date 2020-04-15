@@ -11,3 +11,8 @@ KEY_AIRSEAFLUX
     (interpolated winds)
     files in PI_CARBON_PAPER/MAIN_ANALYSIS/pkls/windmag
         how made: getting_2007_2015_of_interpolated_winds.ipynb
+
+Oma, Revelle factor, pco2, etc:
+    made in PI_CARBON_PAPER/MAIN_ANALYSIS/pyscripts/pyscripts_oma_pco2_extract
+    Oma/OmC,pH,pco2 in: /data/tjarniko/results/hindcast.201905_dayavg_OmA-pH-pCO2
+    for the PILA runs: /data/tjarniko/results/BASERUN_EXP/Oma_calc
