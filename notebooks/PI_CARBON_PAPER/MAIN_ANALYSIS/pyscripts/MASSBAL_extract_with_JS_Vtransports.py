@@ -51,10 +51,10 @@ en3 = dt.datetime(2015,12,31)
 
 tdir = '/data/tjarniko/MEOPAR/analysis_tereza/notebooks/PI_CARBON_PAPER/MAIN_ANALYSIS/pkls/'
 ncname_BR = tdir + 'MASSBAL_BR3.nc'
-ncname_PI = tdir + 'MASSBAL_PI4.nc'
+ncname_PI = tdir + 'MASSBAL_PI5.nc'
 
 sdir = '/data/tjarniko/results/BASERUN_EXP/MAIN/BR_3rd_2015/ncs/'
-sdir3 = '/data/tjarniko/results/BASERUN_EXP/PILA4/PI4/ncs/'
+sdir3 = '/data/tjarniko/results/BASERUN_EXP/PI5/ncs/'
 
 y_st = st.timetuple().tm_yday
 print(y_st)
