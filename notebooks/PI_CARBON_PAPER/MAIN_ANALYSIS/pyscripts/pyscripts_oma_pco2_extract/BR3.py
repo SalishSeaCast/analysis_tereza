@@ -1,4 +1,4 @@
-start = '2015-01-01'
+start = '2015-04-27'
 end = '2015-12-31'
 runname = 'BR3'
 ncdir ='/data/tjarniko/results/BASERUN_EXP/MAIN/BR_3rd_2015/ncs'
@@ -84,7 +84,7 @@ def OmA_3D(grid,carp):
     tzero = tpressure * 0 
         
     tsra_psu = tsra*35/35.16504
-    ttera_is = gsw.t_from_CT(tsra,ttera,tzero)
+    ttera_is = gsw.t_from_CT(tsra,ttera,tdepths)
 
     response_tup = mocsy.mvars(temp=ttera_is, sal=tsra_psu, alk=ttara, dic=tdra, 
                        sil=tzero, phos=tzero, patm=tpressure, depth=tdepths, lat=tzero, 
