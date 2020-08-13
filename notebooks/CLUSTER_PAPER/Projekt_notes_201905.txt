@@ -29,11 +29,12 @@ R = running, D = done
 BIO
 ~~~~~~~~Phase 2 - zip
 
-from directory: /ocean/tjarniko/MEOPAR/NC_hindcast/2015 
+from directory: /data/tjarniko/MEOPAR/analysis_tereza/notebooks/CLUSTER_PAPER/NC_HINDCAST/2015 
 zip: (variables in caps, FWI4m as FWI syntax)
 zip -r WIND2015.zip WIND_TS/
 
 DONE FOR HALO, BIO, FWI for 2013-2016
+done for NIT 2013-16
 
 ~~~~~~~Phase 3 - move to walrus
 
@@ -53,6 +54,7 @@ or datamat = nc_to_matfile_fxn_nobio('HALO',2014,365)
 save as wind_2016hind.mat with single variable “datamat”
 if bio, run linearize bio and also save datamat_linear!!!!!
 move to folder datamats
+
 
 
 Done log: 
