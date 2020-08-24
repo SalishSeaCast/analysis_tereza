@@ -1,0 +1,94 @@
+Running cluster analysis on Hindcast for years 2013-2016
+/results2/SalishSea/hindcast.201905
+refactor it for it to work with Python. 
+
+
+
+Variables - Bio, Fwi_4m, Halo, Ved, wind
+
+
+
+
+~~~~~Phase 1: extraction
+repo: analysis_tereza/notebooks/CLUSTER_PAPER/CLEAN/extraction_scripts
+
+BIO: bio_fxn.bio_de(spacing, stn_start, stn_end, year)
+FWI_4m: fresh_fxn.freshwater_retrieval_4m(stn_b,stn_e,threshold,year), threshold = 50m
+HALO: halo_fxn.yearhalo_de(spacing,stn_b,stn_e,year)
+VED: ved_fxn.yearved_de(spacing,stn_b,stn_e,year) ved_fxn.yearved_de(10,0,580,2013)
+WIND: first need to create interpolated nc wind files: wind_fxn.produce_interpolated_wind_netcdf(year, daystart, dayend)
+      then wind_fxn.yearwinds_de(spacing,stn_b,stn_e,year)
+
+These are presently set up to extract to:
+./NC_hindcast/$YEAR/$VAR_TS
+
+
+------Phase 2: clustering
+
+We are going to avoid all the faff by switching the pipeline to be in Python. 
+
+
+
+#######################
+~~~~~~~~Phase 2 - zip
+
+from directory: /data/tjarniko/MEOPAR/analysis_tereza/notebooks/CLUSTER_PAPER/NC_HINDCAST/2015 
+zip: (variables in caps, FWI4m as FWI syntax)
+zip -r WIND2015.zip WIND_TS/
+
+DONE FOR HALO, BIO, FWI for 2013-2016
+done for NIT 2013-16
+
+~~~~~~~Phase 3 - move to walrus
+
+cd /Users/terezajana/Sync/phd_other/at3/CLUSTER/verze2pt0/NC_HIND
+scp -r tjarniko@salish:/ocean/tjarniko/MEOPAR/NC_hindcast/2015/WIND2015.zip .
+
+DONE FOR HALO BIO FWI for 2013-2016 
+
+
+~~~Phase 4 - nc to matfile 
+
+cd /Users/terezajana/Sync/phd_other/at3/201905_CLUSTER
+unzip zip files and move them here, eg BIO2013/BIO_TS
+
+datamat, datamat_linear  = nc_to_matfile_fxnbio('BIO',2013,365)
+or datamat = nc_to_matfile_fxn_nobio('HALO',2014,365)
+save as wind_2016hind.mat with single variable “datamat”
+if bio, run linearize bio and also save datamat_linear!!!!!
+move to folder datamats
+
+
+
+Done log: 
+DONE for BIO, HALO, FWI, 2013-2016
+
+~~~~Phase 5 cluster_from_matfile 
+
+
+run cluster_2_n_clusters.m
+a) change var to relevant variable -eg ‘wind’, 
+check signalmat = datamat or datamat_linear for bio
+save dendrogram -10x10 inches, 300 dpi jpg render, save as, eg, wind2016.jpg
+open file, look and count, choose appropriate cluster count
+
+save as wind_2016hind_cl.mat with variables datamat, datamat_linear, cl_n, and clustermap
+
+
+DONE for BIO, HALO, FWI, 2013-2016
+
+~~~~~Phase 5 - move matfiles back to salish
+
+Move matfile back to salish 
+datamats to /data/tjarniko/MEOPAR/analysis-tereza/notebooks/CLUSTER_201905
+
+DONE for BIO, HALO, FWI, 2013-2016
+
+~~~~ Phase 6 - maps and signals
+
+run n_cluster_maps.ipynb
+run signal.ipynb
+run signal_bio.ipynb
+everything is saved to figs
+
+DONE for BIO, HALO, FWI, 2013-2016
