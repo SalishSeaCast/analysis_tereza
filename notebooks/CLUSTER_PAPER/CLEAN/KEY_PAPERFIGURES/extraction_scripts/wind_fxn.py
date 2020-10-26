@@ -188,11 +188,11 @@ def yearwinds_de(spacing,stn_b,stn_e,year):
 
             tdate = arrow_array[i][0]
             yy = tdate.format('YYYYMMDD')
-
-        for day in range(0,end_day):
-            print(day)
-            ##open the winds file
-            #dayfile
+            print(i)
+#         for day in range(0,end_day):
+#             print(day)
+#             ##open the winds file
+#             #dayfile
             
             filestart = f'./WINDFILES_interp/windint_{yy}.nc'
             
@@ -215,13 +215,13 @@ def yearwinds_de(spacing,stn_b,stn_e,year):
             
 
             
-            daily_windmag[day] = daily_wm
-            daily_windstress[day] = daily_ws
-            daily_windenergy[day] = daily_we
+            daily_windmag[i] = daily_wm
+            daily_windstress[i] = daily_ws
+            daily_windenergy[i] = daily_we
             
             
             winds = xr.Dataset({'wind_mags':(['t'], daily_windmag), 'wind_stresses':(['t'], daily_windstress), 
                                 'wind_energy':(['t'], daily_windenergy)})
-            stn_name = './NC_HINDCAST/' + str(year) + '/WIND_TS/stn_' + str(stn) + '_wind_data_sp' + str(spacing) + '.nc' 
+            stn_name = '/data/tjarniko/MEOPAR/analysis_tereza/notebooks/CLUSTER_PAPER/CLEAN/NC_HINDCAST/' + str(year) + '/WIND_TS/stn_' + str(stn) + '_wind_data_sp' + str(spacing) + '.nc' 
             winds.to_netcdf(stn_name)
             
