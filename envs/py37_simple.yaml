@@ -1,0 +1,31 @@
+name: py37_simple
+channels:
+ - conda-forge
+dependencies:
+ - python=3.7.*
+ - numpy=1.17.*
+ - matplotlib=3.1.*
+ - netcdf4
+ - basemap
+ - hdf4
+ - pandas=0.25.*
+ - cartopy
+ - progressbar2
+ - xarray
+ - dask
+ - jupyter
+ - arrow
+ - ipython
+ - jupyterlab
+ - lxml
+ - python-dateutil
+ - pyyaml
+ - scipy
+ - cmocean
+ - pip
+ - pip:
+   - f90nml
+   - gsw
+# conda activate py37
+# pip install --user --editable /data/eolson/results/MEOPAR/tools/SalishSeaTools
+# python -m ipykernel install --user --name py37 --display-name "Python (py37)"

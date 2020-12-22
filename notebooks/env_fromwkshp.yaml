@@ -1,0 +1,17 @@
+# conda env description
+#
+#
+name: rutabaga
+
+channels:
+  - conda-forge
+
+dependencies:
+  - python=3.9
+  - xarray
+  - numpy
+  - matplotlib
+  - pip
+
+  - pip:
+     - angles
