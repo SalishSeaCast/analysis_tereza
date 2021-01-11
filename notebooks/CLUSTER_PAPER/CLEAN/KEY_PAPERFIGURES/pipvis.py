@@ -165,8 +165,9 @@ def clusters_basic(ax1,year,var,noclust,cl_this, colors, legend = True, markersi
         ax1.set_xticklabels( () ) 
         ax1.set_yticklabels( () ) 
     
-    tit = var + ', year: ' + year + ' \n n. clusters = '+ str(noclust)
+    tit = 'year ' + year # + ' \n n. clusters = '+ str(noclust)
+    
     if legend:
-        ax1.legend(bbox_to_anchor=(1.2, 1), fontsize = legfontsize)
+        ax1.legend(bbox_to_anchor=(1.06, 1), fontsize = legfontsize)
     ax1.set_title(tit,fontsize = legfontsize + 2)
     
