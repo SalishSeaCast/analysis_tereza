@@ -1,5 +1,5 @@
-from numpy import *
-from scipy import *
+# from numpy import *
+# from scipy import *
 
 import netCDF4 as nc
 import numpy as np
@@ -26,11 +26,11 @@ yrs = ['13','14','15','16','17']
 
 #uncomment whichever variable you are creating a dataset for
 #TA
-# ncnames = ['TA_hindcast201905_GRL_comp_2013.nc','TA_hindcast201905_GRL_comp_2014.nc',
-#           'TA_hindcast201905_GRL_comp_2015.nc','TA_hindcast201905_GRL_comp_2016.nc',
-#           'TA_hindcast201905_GRL_comp_2017.nc']        
-# datnames = ['carp','carp','carp','carp','carp']
-# fnames = ['TA','TA','TA','TA','TA']
+ncnames = ['TA_hindcast201905_GRL_comp_2013.nc','TA_hindcast201905_GRL_comp_2014.nc',
+          'TA_hindcast201905_GRL_comp_2015.nc','TA_hindcast201905_GRL_comp_2016.nc',
+          'TA_hindcast201905_GRL_comp_2017.nc']        
+datnames = ['carp','carp','carp','carp','carp']
+fnames = ['TA','TA','TA','TA','TA']
 
 #DIC
 # ncnames = ['DIC_hindcast201905_GRL_comp_2013.nc','DIC_hindcast201905_GRL_comp_2014.nc',
@@ -47,15 +47,15 @@ yrs = ['13','14','15','16','17']
 # fnames = ['SAL','SAL','SAL','SAL','SAL']
 
 # #temp
-ncnames = ['temp_hindcast201905_GRL_comp_2013.nc','temp_hindcast201905_GRL_comp_2014.nc',
-          'temp_hindcast201905_GRL_comp_2015.nc','temp_hindcast201905_GRL_comp_2016.nc',
-          'temp_hindcast201905_GRL_comp_2017.nc']        
-datnames = ['grid','grid','grid','grid','grid']
-fnames = ['TEMP','TEMP','TEMP','TEMP','TEMP']
+# ncnames = ['temp_hindcast201905_GRL_comp_2013.nc','temp_hindcast201905_GRL_comp_2014.nc',
+#           'temp_hindcast201905_GRL_comp_2015.nc','temp_hindcast201905_GRL_comp_2016.nc',
+#           'temp_hindcast201905_GRL_comp_2017.nc']        
+# datnames = ['grid','grid','grid','grid','grid']
+# fnames = ['TEMP','TEMP','TEMP','TEMP','TEMP']
 
 
 #load grl data for comparison
-infil = loadtxt('../Datasets/grl2016_nu.txt')
+infil = np.loadtxt('../Datasets/grl2016_nu.txt')
 
 crid= infil[:,0]
 ln = infil[:,2]
@@ -146,6 +146,8 @@ for t_var in range(0,len(datnames)):
     ts2[:] = js_ref[:]
     ts3 = g.createVariable('mod_x','f4',('ref'))
     ts3[:] = is_ref[:]
+    ts3 = g.createVariable('depth_index','f4',('ref'))
+    ts3[:] = ds_f[:]
     f.close()
 
 end = time.time()

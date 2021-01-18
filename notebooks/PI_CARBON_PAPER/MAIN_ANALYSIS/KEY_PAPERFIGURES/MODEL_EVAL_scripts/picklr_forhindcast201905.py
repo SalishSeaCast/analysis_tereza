@@ -120,20 +120,26 @@ def find_model_dat(w, fname, datname, firstmo, yr, path_to_ncs):
         #print(fname)
         
         model_dat = qnc['model_output'][fname][t_depth,j,i]
+        
+        w_f = w
+        j_f = j
+        i_f = i
+        d_f = t_depth
+        print(d_f)
         # flag spots where model gives 0s. 
-        if (model_dat == 0):
-        # we have     
-#             print('*******')
-#             print('index of grl data: '+str(w))
-#             print('depth in grl data: '+str(P[w]))
-#             print('j index: '+str(j))
-#             print('i index: '+str(i))
-#             print('DEPTH IND: '+str(t_depth))
-#             print('DEPTH : '+str(depth_mod))
-            w_f = w
-            j_f = j
-            i_f = i
-            d_f = t_depth
+#         if (model_dat == 0):
+#         # we have     
+# #             print('*******')
+# #             print('index of grl data: '+str(w))
+# #             print('depth in grl data: '+str(P[w]))
+# #             print('j index: '+str(j))
+# #             print('i index: '+str(i))
+# #             print('DEPTH IND: '+str(t_depth))
+# #             print('DEPTH : '+str(depth_mod))
+#             w_f = w
+#             j_f = j
+#             i_f = i
+#             d_f = t_depth
             
 #         print('Data dic: '+str( dic[w]))
 #         print('Data dic qf: '+str( dic_qf[w]))
