@@ -1,0 +1,26 @@
+header for output of liz.perl
+0) - cruiseID
+1) - sample number 
+2) - line number
+3) - station number 
+4) -  month
+5) - day
+6) - lat 
+7) - long 
+8 - pressure (dbar) 
+9 - T (deg C)
+10 - S (pss-78)
+11 - bottle oxy 
+12 - qc flag do
+13 - dic (umol/kg)
+14 - qc flac dic
+15 - alk (umol/kg)
+16 - qc flag alk
+17 - nitrate (uM)
+18 - qc flag nitrate
+19 - silicic acid (uM) 
+20 - qc flag silicic acid
+21 - phosphate (uM) 
+22 - qc flag phosphate
+23 - pH bottle
+24 - pH QF
