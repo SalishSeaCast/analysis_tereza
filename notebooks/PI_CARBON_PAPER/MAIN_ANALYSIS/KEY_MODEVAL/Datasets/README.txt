@@ -10,3 +10,5 @@ can look back into old analysis repo?
 
 other 2 are from ellie Jan 2021
 .raw > .txt by just changing suffix
+
+csv files are made to standardize dataset columns in KEY_MODEVAL/Dataset_dfmaker.ipynb 
