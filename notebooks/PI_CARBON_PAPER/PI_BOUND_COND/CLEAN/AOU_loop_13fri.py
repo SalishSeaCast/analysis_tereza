@@ -212,7 +212,7 @@ def calc_preind_co2_AOU_method(ncname, datestr):
     for i in range(0,len(depth_r)):
         if i%950 == 0:
             print(i)
-        t_dic = find_DIC_corresp_to_pco2(sal_r[i], temp_r[i], pref_pco2_inc_diseqpco2_r[i], TA_r[i], 1, depth_r[i])
+        t_dic = __corresp_to_pco2(sal_r[i], temp_r[i], pref_pco2_inc_diseqpco2_r[i], TA_r[i], 1, depth_r[i])
         preind_dic_r[i] = t_dic
     preind_pref_dic = preind_dic_r.reshape(40,950)
     
