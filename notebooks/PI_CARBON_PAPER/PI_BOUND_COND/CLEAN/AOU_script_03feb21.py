@@ -165,7 +165,7 @@ def calc_preind_co2_AOU_method(ncname, datestr):
 #(1) estimate AOU on 26 (assoc with water parcel with DIC_{w,2019,26,jdf})
 # = f(O2_{w,2019,26,jdf},S_{w,2019,26,jdf},T_{w,2019,26,jdf}, P_{w,2019,26,jdf})
 #(P is there to determine T when last at surface - I'll call it preT next)
-    
+
     osol = gsw.O2sol(sal,temp,depth_this,-125,50)
     AOU = osol - O2
     print('max AOU: '+str(np.max(AOU)) + ', min AOU: '+ str(np.min(AOU)))
@@ -212,7 +212,7 @@ def calc_preind_co2_AOU_method(ncname, datestr):
     for i in range(0,len(depth_r)):
         if i%950 == 0:
             print(i)
-        t_dic = __corresp_to_pco2(sal_r[i], temp_r[i], pref_pco2_inc_diseqpco2_r[i], TA_r[i], 1, depth_r[i])
+        t_dic = find_DIC_corresp_to_pco2(sal_r[i], temp_r[i], pref_pco2_inc_diseqpco2_r[i], TA_r[i], 1, depth_r[i])
         preind_dic_r[i] = t_dic
     preind_pref_dic = preind_dic_r.reshape(40,950)
     
@@ -277,3 +277,6 @@ def preind_dic_ncmaker(startind, endind, year):
         print(year_ar[ind])
         test_LO = '/results/forcing/LiveOcean/boundary_conditions/LiveOcean_v201905_' + year_ar[ind] +'.nc'
         calc_preind_co2_AOU_method(test_LO, year_ar[ind])
+        
+        
+preind_dic_ncmaker(0, 365, 2015)
