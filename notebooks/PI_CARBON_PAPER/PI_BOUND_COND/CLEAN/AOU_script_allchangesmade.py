@@ -10,12 +10,18 @@ def find_DIC_corresp_to_pco2(tsal, ttemp, tpco2, tta, pres_atm, depth_this):
     
     import numpy as np
     import mocsy
+    import gsw
     
     steps = 10000
     tsal_r = np.zeros([steps])
     tsal_r[:] = tsal
+    #convert to psu
+    tsal_r_psu = tsal_r*35/35.16504
+    
     ttemp_r = np.zeros([steps])
     ttemp_r[:] = ttemp
+    #convert temperature to potential temperature
+    ttemp_r_pot = gsw.pt_from_CT(tsal_r,ttemp_r)
     tta_r = np.zeros([steps])
     tta_r[:] = tta * 1e-3
     tpres_r = np.zeros([steps])
@@ -23,15 +29,17 @@ def find_DIC_corresp_to_pco2(tsal, ttemp, tpco2, tta, pres_atm, depth_this):
     depth_r = np.zeros([steps])
     depth_r[:] = depth_this
     tzero = np.zeros([steps])
-
+    tlat = np.zeros([steps])
+    tlat[:]=50
+    
     end_d = 2400
     start_d = 600
     intvl = (end_d - start_d)/steps
     tdic_r = np.arange(start_d,end_d-0.1,intvl) * 1e-3
-    
-    response_tup = mocsy.mvars(temp=ttemp_r, sal=tsal_r, alk=tta_r, dic=tdic_r, 
+    #change to take potential temperature
+    response_tup = mocsy.mvars(temp=ttemp_r_pot, sal=tsal_r_psu, alk=tta_r, dic=tdic_r, 
                        sil=tzero, phos=tzero, patm=tpres_r, depth=depth_r, lat=tzero, 
-                        optcon='mol/m3', optt='Tinsitu', optp='m',
+                        optcon='mol/m3', optt='Tpot', optp='m',
                         optb = 'l10', optk1k2='m10', optkf = 'dg', optgas = 'Pinsitu')
     pH,pco2,fco2,co2,hco3,co3,OmegaA,OmegaC,BetaD,DENis,p,Tis = response_tup    
     
@@ -60,6 +68,9 @@ def oned_moxy(tsal, ttemp, tdic, tta, pres_atm, depth_this):
 
     tsra = np.ravel(tsal)
     ttera = np.ravel(ttemp)
+    #convert cons. temperature to potential temperature
+    ttera_pot = gsw.pt_from_CT(tsra,ttera)
+    
     ttara = np.ravel(tta) * 1e-3
     tdra = np.ravel(tdic) * 1e-3
     tzero = np.zeros_like(tsra)
@@ -70,11 +81,11 @@ def oned_moxy(tsal, ttemp, tdic, tta, pres_atm, depth_this):
     tzero = tpressure * 0 
         
     tsra_psu = tsra*35/35.16504
-    ttera_is = gsw.t_from_CT(tsra,ttera,tzero)
+    #ttera_is = gsw.t_from_CT(tsra,ttera,tzero)
 
-    response_tup = mocsy.mvars(temp=ttera_is, sal=tsra_psu, alk=ttara, dic=tdra, 
+    response_tup = mocsy.mvars(temp=ttera_pot, sal=tsra_psu, alk=ttara, dic=tdra, 
                        sil=tzero, phos=tzero, patm=tpressure, depth=tdepth, lat=tzero, 
-                        optcon='mol/m3', optt='Tinsitu', optp='m',
+                        optcon='mol/m3', optt='Tpot', optp='m',
                         optb = 'l10', optk1k2='m10', optkf = 'dg', optgas = 'Pinsitu')
     pH,pco2,fco2,co2,hco3,co3,OmegaA,OmegaC,BetaD,DENis,p,Tis = response_tup
 
@@ -143,6 +154,7 @@ def calc_preind_co2_AOU_method(ncname, datestr):
     TA = test_LO['TA'][0,:,0,:]
     O2 = test_LO['OXY'][0,:,0,:]
     depth_this = np.zeros_like(TA)
+    zeros = np.zeros_like(TA)
     #depth_this - array of depths of same shape as DIC
     for i in range(0,950):
         depth_this[:,i] = zlevels
@@ -151,8 +163,8 @@ def calc_preind_co2_AOU_method(ncname, datestr):
     #found using cfc ages
     params0 = 0.1301889490932413
     params1 = 3.8509914822057825
-    params2 = 8.301166081413104
-    pycnal_last_at_surface = 2019 - (params0 *np.exp(-params1*(25.15-sigma0))+params2)
+    params2 = 8.301166081413104 #change to 2015 since model year is 2015
+    pycnal_last_at_surface = 2015 - (params0 *np.exp(-params1*(25.15-sigma0))+params2)
 
     #find last seen atmospheric co2
     pycnal_witnessed_atm_co2 = np.zeros_like(pycnal_last_at_surface)
@@ -166,8 +178,10 @@ def calc_preind_co2_AOU_method(ncname, datestr):
 # = f(O2_{w,2019,26,jdf},S_{w,2019,26,jdf},T_{w,2019,26,jdf}, P_{w,2019,26,jdf})
 #(P is there to determine T when last at surface - I'll call it preT next)
 
-    osol = gsw.O2sol(sal,temp,depth_this,-125,50)
-    AOU = osol - O2
+    osol = gsw.O2sol(sal,temp,zeros,-125,50)
+    #convert osol to umol/L
+    osol_umolL = osol*(1000/(1000+sigma0))
+    AOU = osol_umolL - O2
     print('max AOU: '+str(np.max(AOU)) + ', min AOU: '+ str(np.min(AOU)))
     AOU_stoich = np.copy(AOU)
     AOU_stoich = AOU_stoich * (117/170)
@@ -192,7 +206,7 @@ def calc_preind_co2_AOU_method(ncname, datestr):
 #{expect diseqPCO2 may be about 0-30 uatm but not 300uatm or more}
     diseqPCO2 = preformed_pco2 - pycnal_witnessed_atm_co2
     print('max diseqPCO2: '+str(np.max(diseqPCO2)) + ', min diseqPCO2: '+ str(np.min(diseqPCO2)))
-    pref_pco2_inc_diseqpco2 = diseqPCO2 + 284
+    PIpref_pco2_inc_diseqpco2 = diseqPCO2 + 284
 
     
 #(5) estimate preindustrial preformed DIC
@@ -202,7 +216,7 @@ def calc_preind_co2_AOU_method(ncname, datestr):
     print('calculating preindustrial preformed DIC')    
     preind_dic = np.zeros_like(DIC)
     preind_dic_r = np.ravel(preind_dic)
-    pref_pco2_inc_diseqpco2_r = np.ravel(pref_pco2_inc_diseqpco2)
+    PIpref_pco2_inc_diseqpco2_r = np.ravel(PIpref_pco2_inc_diseqpco2)
     depth_r = np.ravel(depth_this)
     sal_r = np.ravel(sal)
     temp_r = np.ravel(temp)
@@ -212,7 +226,7 @@ def calc_preind_co2_AOU_method(ncname, datestr):
     for i in range(0,len(depth_r)):
         if i%950 == 0:
             print(i)
-        t_dic = find_DIC_corresp_to_pco2(sal_r[i], temp_r[i], pref_pco2_inc_diseqpco2_r[i], TA_r[i], 1, zeros_r[i])
+        t_dic = find_DIC_corresp_to_pco2(sal_r[i], temp_r[i], PIpref_pco2_inc_diseqpco2_r[i], TA_r[i], 1, zeros_r[i])
         preind_dic_r[i] = t_dic
     preind_pref_dic = preind_dic_r.reshape(40,950)
     
@@ -221,7 +235,7 @@ def calc_preind_co2_AOU_method(ncname, datestr):
 
     final_preind_DIC = DIC - deltaDIC
 
-    f = nc.Dataset('./preind_DIC/LO_AOUmethod_stoicCO_diseq_prefC_zeroed_' + datestr +'_preind_DIC.nc','w', format='NETCDF4') #'w' stands for write
+    f = nc.Dataset('./preind_DIC/LO_AOUmethod_stoicCO_diseq_allup_' + datestr +'_preind_DIC.nc','w', format='NETCDF4') #'w' stands for write
     g = f.createGroup('preindustrial_DIC')
     g.createDimension('xval', 950)
     g.createDimension('depth', 40)
@@ -263,6 +277,7 @@ def preind_dic_ncmaker(startind, endind, year):
             tm = '0' + str(m)
         print(tm)
         for d in range(1,t_daymon[m-1]+1):
+            
             if d>=10:
                 td = str(d)
             if d<10:
@@ -273,10 +288,10 @@ def preind_dic_ncmaker(startind, endind, year):
                             
     for ind in range(startind,endind):
         start = time.time()
-
+        print('start is')
         print(year_ar[ind])
         test_LO = '/results/forcing/LiveOcean/boundary_conditions/LiveOcean_v201905_' + year_ar[ind] +'.nc'
         calc_preind_co2_AOU_method(test_LO, year_ar[ind])
+        print('seconds taken')
+        print(time.time()-start)
         
-        
-preind_dic_ncmaker(0, 365, 2015)

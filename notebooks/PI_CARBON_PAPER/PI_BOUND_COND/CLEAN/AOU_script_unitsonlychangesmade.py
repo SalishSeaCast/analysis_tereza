@@ -37,7 +37,7 @@ def find_DIC_corresp_to_pco2(tsal, ttemp, tpco2, tta, pres_atm, depth_this):
     intvl = (end_d - start_d)/steps
     tdic_r = np.arange(start_d,end_d-0.1,intvl) * 1e-3
     #change to take potential temperature
-    response_tup = mocsy.mvars(temp=ttemp_r, sal=tsal_r_psu, alk=tta_r, dic=tdic_r, 
+    response_tup = mocsy.mvars(temp=ttemp_r_pot, sal=tsal_r_psu, alk=tta_r, dic=tdic_r, 
                        sil=tzero, phos=tzero, patm=tpres_r, depth=depth_r, lat=tzero, 
                         optcon='mol/m3', optt='Tpot', optp='m',
                         optb = 'l10', optk1k2='m10', optkf = 'dg', optgas = 'Pinsitu')
@@ -164,7 +164,7 @@ def calc_preind_co2_AOU_method(ncname, datestr):
     params0 = 0.1301889490932413
     params1 = 3.8509914822057825
     params2 = 8.301166081413104 #change to 2015 since model year is 2015
-    pycnal_last_at_surface = 2015 - (params0 *np.exp(-params1*(25.15-sigma0))+params2)
+    pycnal_last_at_surface = 2019 - (params0 *np.exp(-params1*(25.15-sigma0))+params2)
 
     #find last seen atmospheric co2
     pycnal_witnessed_atm_co2 = np.zeros_like(pycnal_last_at_surface)
@@ -206,7 +206,7 @@ def calc_preind_co2_AOU_method(ncname, datestr):
 #{expect diseqPCO2 may be about 0-30 uatm but not 300uatm or more}
     diseqPCO2 = preformed_pco2 - pycnal_witnessed_atm_co2
     print('max diseqPCO2: '+str(np.max(diseqPCO2)) + ', min diseqPCO2: '+ str(np.min(diseqPCO2)))
-    pref_pco2_inc_diseqpco2 = diseqPCO2 + 284
+    PIpref_pco2_inc_diseqpco2 = diseqPCO2 + 284
 
     
 #(5) estimate preindustrial preformed DIC
@@ -216,7 +216,7 @@ def calc_preind_co2_AOU_method(ncname, datestr):
     print('calculating preindustrial preformed DIC')    
     preind_dic = np.zeros_like(DIC)
     preind_dic_r = np.ravel(preind_dic)
-    pref_pco2_inc_diseqpco2_r = np.ravel(pref_pco2_inc_diseqpco2)
+    PIpref_pco2_inc_diseqpco2_r = np.ravel(PIpref_pco2_inc_diseqpco2)
     depth_r = np.ravel(depth_this)
     sal_r = np.ravel(sal)
     temp_r = np.ravel(temp)
@@ -226,7 +226,7 @@ def calc_preind_co2_AOU_method(ncname, datestr):
     for i in range(0,len(depth_r)):
         if i%950 == 0:
             print(i)
-        t_dic = find_DIC_corresp_to_pco2(sal_r[i], temp_r[i], pref_pco2_inc_diseqpco2_r[i], TA_r[i], 1, depth_r[i])
+        t_dic = find_DIC_corresp_to_pco2(sal_r[i], temp_r[i], PIpref_pco2_inc_diseqpco2_r[i], TA_r[i], 1, depth_r[i])
         preind_dic_r[i] = t_dic
     preind_pref_dic = preind_dic_r.reshape(40,950)
     
@@ -277,6 +277,7 @@ def preind_dic_ncmaker(startind, endind, year):
             tm = '0' + str(m)
         print(tm)
         for d in range(1,t_daymon[m-1]+1):
+            
             if d>=10:
                 td = str(d)
             if d<10:
@@ -287,10 +288,11 @@ def preind_dic_ncmaker(startind, endind, year):
                             
     for ind in range(startind,endind):
         start = time.time()
-
+        print('start is fun')
         print(year_ar[ind])
         test_LO = '/results/forcing/LiveOcean/boundary_conditions/LiveOcean_v201905_' + year_ar[ind] +'.nc'
         calc_preind_co2_AOU_method(test_LO, year_ar[ind])
+        print('seconds taken')
+        print(time.time()-start)
         
-        
-preind_dic_ncmaker(0, 365, 2015)
+preind_dic_ncmaker(0, 1, 2015)
