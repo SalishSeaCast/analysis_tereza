@@ -1,0 +1,7 @@
+Expocode: 32C320171025,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Vessel Name: Columbia,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+"PI: Evans, W.",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Org: Hakai Institute,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Vessel Type: ferry,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Suggested QC: A,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Type code,Date and time (yyyy-mm-dd hh:mm:ss),PC Date (ddmmyy),PC time (hhmmss),GPS date (ddmmyy),GPS time (hhmmss),latitude,longitude,equ temp (deg C),std val (ppm),CO2 (abs),CO2 (ppm),H2O (abs),H2O (ppm),LICOR temp (deg C),LICOR pressure (mbar),equ differential pressure (mbar),H2O flow (l/min),LICOR flow (ml/min),equ pump speed (rpm),vent flow (ml/min),atm moisture sensor,equil moisture sensor,drip sensor,cond temp (deg C),dry box temp (deg C),deck pressure (mbar),raw O2 (uM),raw O2 (%Sat),O2 Temp (deg C),Cal Phase,TCPhase,C1RPh,C2RPh,C1Amp,C2Amp,Raw Temp,TSG T (deg C),TSG Conductivity (S/m),TSG Salinity (PSS-78),Intake T (deg C),calibrated ATM xCO2 dry (ppm),calibrated SW xCO2 dry (ppm),ATM pressure for ATM xCO2 (mbar),equilibrator pressure (mbar),ATM pCO2 wet (uatm),SW pCO2 wet equil T (uatm),SW pCO2 wet SST (uatm),O2 (umol/kg),O2sol (umol/kg),delta-O2 (umol/kg),ATM fCO2_wet (uatm),SW fCO2_wet (uatm)
