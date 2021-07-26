@@ -63,13 +63,13 @@ def calc_preind_co2_AOU_method(arrowdate, obs_year, target_year, scen):
     watermass_witnessed_co2_obs = hm.co2_from_year(scen,year_watermass_at_surface)
     print(np.min(watermass_witnessed_co2_obs))
     print(np.shape(watermass_witnessed_co2_obs))
-    
+#     watermass_witnessed_co2_target = \
+#     hm.co2_from_year(scen,year_watermass_at_surface+(target_year_ar-obs_year_ar))
     if target_year < 1905:
         watermass_witnessed_co2_target = 284
     else:
         watermass_witnessed_co2_target = \
-    hm.co2_from_year(scen,year_watermass_at_surface+(target_year_ar-obs_year_ar))
-
+    hm.co2_from_year(scen,year_watermass_at_surface+(target_year_ar-obs_year_ar))ttm
 ###GET AOU
 #(1) estimate AOU on 26 (assoc with water parcel with DIC_{w,2019,26,jdf})
 # = f(O2_{w,2019,26,jdf},S_{w,2019,26,jdf},T_{w,2019,26,jdf}, P_{w,2019,26,jdf})
@@ -209,32 +209,32 @@ for r in arrow.Arrow.span_range('day', start_run, end_run):
 def func1():
   print('func1: starting')
   for i in range(0,60):
-        calc_preind_co2_AOU_method(arrow_array[i][0], 2017, 2050, '2_4pt5')
+        calc_preind_co2_AOU_method(arrow_array[i][0], 2017, 1901, '2_4pt5')
 
 def func2():
   print('func2: starting')
   for i in range(60,120):
-        calc_preind_co2_AOU_method(arrow_array[i][0], 2017, 2050, '2_4pt5')
+        calc_preind_co2_AOU_method(arrow_array[i][0], 2017, 1901, '2_4pt5')
       
 def func3():
   print('func3: starting')
   for i in range(120,180):
-        calc_preind_co2_AOU_method(arrow_array[i][0], 2017, 2050, '2_4pt5')
+        calc_preind_co2_AOU_method(arrow_array[i][0], 2017, 1901, '2_4pt5')
         
 def func4():
   print('func4: starting')
   for i in range(180,240):
-        calc_preind_co2_AOU_method(arrow_array[i][0], 2017, 2050, '2_4pt5')
+        calc_preind_co2_AOU_method(arrow_array[i][0], 2017, 1901, '2_4pt5')
         
 def func5():
   print('func5: starting')
   for i in range(240,300):
-        calc_preind_co2_AOU_method(arrow_array[i][0], 2017, 2050, '2_4pt5')
+        calc_preind_co2_AOU_method(arrow_array[i][0], 2017, 1901, '2_4pt5')
         
 def func6():
   print('func36: starting')
   for i in range(300,366):
-        calc_preind_co2_AOU_method(arrow_array[i][0], 2017, 2050, '2_4pt5')
+        calc_preind_co2_AOU_method(arrow_array[i][0], 2017, 1901, '2_4pt5')
         
 if __name__ == '__main__':
   p1 = Process(target=func1)
