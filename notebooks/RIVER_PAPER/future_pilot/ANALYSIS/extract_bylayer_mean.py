@@ -55,7 +55,7 @@ def extractor(start, end, ftype, sdir, varname, fname,  inletmask = False):
         ymd = tdate.format('YYYYMMDD')
         nc_ncfile = '/data/tjarniko/results/FUTURE_runs/' + sdir + '/*/*_1d_*'+ ftype +'*' + ymd + '-' + ymd + '.nc'
         tnc_ncfile = glob.glob(nc_ncfile)
-        #print(tnc_ncfile[0])
+        print(tnc_ncfile[0])
         ncfile_ar.append(tnc_ncfile[0])
         if i%50 == 0:
             print(i)

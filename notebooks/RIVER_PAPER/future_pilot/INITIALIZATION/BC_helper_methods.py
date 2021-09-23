@@ -101,6 +101,44 @@ def oned_moxy(tsal, ttemp, tdic, tta, pres_atm, depth_this):
     
     return pHr, OmAr, pco2r
 
+
+def point_moxy(tsal, ttemp, tdic, tta, pres_atm, depth_this):
+
+    ### GET pCO2 (and Omega, etc) GIVEN DIC, TA 
+    import sys
+    sys.path.append('/data/tjarniko/mocsy')
+    import mocsy
+    import numpy as np
+    import gsw
+    
+
+
+    tsra = (tsal)
+    ttera = (ttemp)
+    #convert cons. temperature to potential temperature
+    ttera_pot = gsw.pt_from_CT(tsra,ttera)
+    
+    
+    ttara = (tta) * 1e-3
+    tdra = (tdic) * 1e-3
+    tzero = 0
+    tpressure = pres_atm
+    tdepth = (depth_this)
+    tsra_psu = tsra*35/35.16504
+    #ttera_is = gsw.t_from_CT(tsra,ttera,tzero)
+
+    response_tup = mocsy.mvars(temp=ttera_pot, sal=tsra_psu, alk=ttara, dic=tdra, 
+                       sil=tzero, phos=tzero, patm=tpressure, depth=tdepth, lat=tzero, 
+                        optcon='mol/m3', optt='Tpot', optp='m',
+                        optb = 'l10', optk1k2='m10', optkf = 'dg', optgas = 'Pinsitu')
+    pH,pco2,fco2,co2,hco3,co3,OmegaA,OmegaC,BetaD,DENis,p,Tis = response_tup
+
+    pHr = pH
+    OmAr = OmegaA
+    pco2r = pco2
+    
+    return pHr, OmAr, pco2r
+
 def co2_from_year_pointmeas(scen,tyear):
     import pandas as pd
     import numpy as np
@@ -179,7 +217,7 @@ def load_nc(arrowdate):
     import netCDF4 as nc
 
     tdate = arrowdate
-    print(tdate)
+    #print(tdate)
     
     #take a boundary condition string from liveocean, open it
     yy = tdate.format('YYYY')
