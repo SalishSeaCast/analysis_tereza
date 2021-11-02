@@ -5,8 +5,8 @@ import numpy as np
 
 
 ## to do this for a different year, change start and end
-start ='2012-01-01'
-end ='2012-12-31'
+start ='2013-01-01'
+end ='2013-12-31'
 
 #### open the grid file and find cell volumes in m3, and cell thicknesses (for multiplying by mesozooplankton concentrations)
 grid = nc.Dataset('/data/tjarniko/MEOPAR/grid/mesh_mask201702.nc')
