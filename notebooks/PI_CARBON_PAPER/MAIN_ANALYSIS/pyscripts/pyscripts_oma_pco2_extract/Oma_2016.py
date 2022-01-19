@@ -1,5 +1,5 @@
 start = '2016-01-01'
-end = '2016-12-31'
+end = '2016-12-30'
 ## too much import things
 import matplotlib.pyplot as plt
 import netCDF4 as nc
